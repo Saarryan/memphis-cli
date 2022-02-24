@@ -8,15 +8,15 @@ exports.factoryMenu = (action, options) => {
             break;
         case "create":
             if (!action[1])
-            console.log("\nFactory name is required. Use command:\nstrech create <factory-name> --project <project-name>") //Add retention and throughput
+            console.log("\nFactory name is required. Use command:\nstrech factory create <factory-name> --project <project-name>") //Add retention and throughput
             else
             factory.createFactory(action[1], options)
             break;
         case "edit":
             if (!action[1])
-            console.log("\nFactory name is required. Use command:\nstrech edit <factory-name> --name <new-factory-name> --project <project-name>") //Add retention and throughput
+            console.log("\nFactory name is required. Use command:\nstrech factory edit <factory-name> --name <new-factory-name> --project <project-name>") //Add retention and throughput
             else
-            factory.editFactory(action[1], options)
+            factory.editFactory(action[1], options) 
             break;
         case "del":
             factory.removeFactory(action[1], options)

@@ -7,19 +7,19 @@ exports.userMenu = (action, options) => {
             break;
         case "add":
             if (!action[1])
-                console.log("\User name is required. Use command:\nstrech user add <user-name> ")
+                console.log("\nUser name is required. Use command:\nstrech user add <user-name> ")
             else
                 users.addUser(action[1])
             break;
         case "del":
             if (!action[1])
-                console.log("\User name is required. Use command:\nstrech del <user-name> ")
+                console.log("\nUser name is required. Use command:\nstrech user del <user-name> ")
             else
                 users.removeUser(action[1])
             break;
         case "regeneratepass":
             if (!action[1])
-                console.log("\nUser name is required. Use command:\nstrech regeneratepass <user-name>")
+                console.log("\nUser name is required. Use command:\nstrech user regeneratepass <user-name>")
             else
                 users.reGeneratePass(action[1])
             break;

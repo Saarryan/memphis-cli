@@ -1,23 +1,27 @@
 #!/usr/bin/env node
-const commander = require("commander"); // include commander in git clone of commander repo
+const commander = require("commander");
 const project = require("./actions/project")
 const factory = require("./actions/factory")
 const user = require("./actions/users")
+const helper = require("./config/helper")
 const program = new commander.Command();
 
 program
     .version('0.1.0')
     .description('Strech CLI')
+    .addHelpText('before', `${helper.projectHelp}\n${helper.factoryHelp}\n${helper.userHelp}`)
 
 program
     .command('project')
-    .description('Project description')
-    .argument('[action]',["ls", "create", "edit", "remove", "del"])
-    .option("-n, --name <project-name>", "Project or queue name")
+    .argument('[command]')
+    .option("-n, --name <project-name>", "Project name")
     .option("-d, --desc <description>", "Project description")//, "default description")
+    .addHelpText('before', helper.projectHelp)
     .action(function () {
-        if (!this.args?.length)
-            program.help();
+        const projectActions = ["ls", "create", "edit", "del"]
+        if (!this.args?.length|| !projectActions.includes(this.args[0])) {
+            console.log(program.commands[0].help())
+        }
         else {
             project.projectMenu(this.args, this.opts())
         }
@@ -25,13 +29,15 @@ program
 
 program
     .command('factory')
-    .description('Factory description')
-    .argument('[action]',["ls", "create", "edit", "remove", "del"])
+    .argument('[command]')
     .option("-n, --name <facroty-name>", "Factory name")
-    .option("-p, --project <project>", "Project name")
+    .option("-p, --project <project>", "Project name", "defultProject")
+    .addHelpText('before', helper.factoryHelp)
     .action(function () {
-        if (!this.args?.length)
-            program.help();
+        const factoryActions = ["ls", "create", "edit", "del"]
+        if (!this.args?.length || !factoryActions.includes(this.args[0])) {
+            console.log(program.commands[1].help())
+        }
         else {
             factory.factoryMenu(this.args, this.opts())
         }
@@ -39,11 +45,13 @@ program
 
 program
     .command('user')
-    .description('User description')
-    .argument('[action]',["ls", "create", "edit", "remove", "del", "regeneratepass"])
+    .argument('[command]')
+    .addHelpText('before', helper.userHelp)
     .action(function () {
-        if (!this.args?.length)
-            program.help();
+        const userActions = ["ls", "add", "del", "regeneratepass"]
+        if (!this.args?.length || !userActions.includes(this.args[0])) {
+            console.log(program.commands[2].help())
+        }
         else {
             user.userMenu(this.args, this.opts())
         }

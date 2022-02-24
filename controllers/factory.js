@@ -71,7 +71,8 @@ exports.createFactory = async (name, options) => {
         //     project_name: name, 
         //     project_description: options.desc
         // });
-        console.log(`\Factory was created. \nDetails:\n  name: ${name}\n  project: ${options.project}`);
+        console.log(`\Factory was created.`);
+        console.table([{ "project name": options.project, "factory name": name }])
     } catch (error) {
         console.error(error);
     }
@@ -79,9 +80,15 @@ exports.createFactory = async (name, options) => {
 
 exports.editFactory = async (name, options) => {
     try {
-        console.log(`\nFactory ${name} was edited. \nDetails:`);
-        options.name && console.log(`  name: ${options.name}`);
-        options.project && console.log(`  description: ${options.project}`);
+        console.log(`\nFactory ${name} was edited.\nDetails:`);
+        if (options.name) {
+            if (options.project)
+                console.table([{ "factory name": options.name, "project name": options.project }])
+            else
+                console.table([{ "factory name": options.name }])
+        }
+        else
+            console.table([{ "project name": options.project }])
     } catch (error) {
         console.error(error);
     }

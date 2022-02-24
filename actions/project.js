@@ -7,13 +7,13 @@ exports.projectMenu = (action, options) => {
             break;
         case "create":
             if (!action[1])
-                console.log("\nProject name is required. Use command:\nstrech create <project-name> --desc <project-description>")
+                console.log("\nProject name is required. Use command:\nstrech project create <project-name> --desc <project-description>")
             else
                 project.createProject(action[1], options)
             break;
         case "edit":
             if (!action[1])
-                console.log("\nProject name is required. Use command:\nstrech edit <project-name> --name <new-name> --desc <new-project-name>")
+                console.log("\nProject name is required. Use command:\nstrech project edit <project-name> --name <new-name> --desc <new-project-name>")
             else if (!(options.name || options.desc))
                 console.log("\nSome flag required")
             else
@@ -21,7 +21,7 @@ exports.projectMenu = (action, options) => {
             break;
         case "del":
             if (!action[1])
-                console.log("\nProject name is required. Use command:\nstrech del <project-name> ")
+                console.log("\nProject name is required. Use command:\nstrech project del <project-name> ")
             else
                 project.removeProject(action[1])
             break;
