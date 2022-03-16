@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const commander = require("commander");
-const project = require("./actions/project")
+const application = require("./actions/application")
 const factory = require("./actions/factory")
 const user = require("./actions/users")
 const helper = require("./config/helper")
@@ -9,21 +9,21 @@ const program = new commander.Command();
 program
     .version('0.1.0')
     .description('Strech CLI')
-    .addHelpText('before', `${helper.projectHelp}\n${helper.factoryHelp}\n${helper.userHelp}`)
+    .addHelpText('before', `${helper.applicationHelp}\n${helper.factoryHelp}\n${helper.userHelp}`)
 
 program
-    .command('project')
+    .command('application')
     .argument('[command]')
-    .option("-n, --name <project-name>", "Project name")
-    .option("-d, --desc <description>", "Project description")//, "default description")
-    .addHelpText('before', helper.projectHelp)
+    .option("-n, --name <application-name>", "Application name")
+    .option("-d, --desc <description>", "Application description")//, "default description")
+    .addHelpText('before', helper.applicationHelp)
     .action(function () {
-        const projectActions = ["ls", "create", "edit", "del"]
-        if (!this.args?.length|| !projectActions.includes(this.args[0])) {
+        const applicationActions = ["ls", "create", "edit", "del"]
+        if (!this.args?.length|| !applicationActions.includes(this.args[0])) {
             console.log(program.commands[0].help())
         }
         else {
-            project.projectMenu(this.args, this.opts())
+            application.applicationMenu(this.args, this.opts())
         }
     })
 
@@ -31,7 +31,7 @@ program
     .command('factory')
     .argument('[command]')
     .option("-n, --name <facroty-name>", "Factory name")
-    .option("-p, --project <project>", "Project name", "defultProject")
+    .option("-p, --application <application>", "Application name", "defultApplication")
     .addHelpText('before', helper.factoryHelp)
     .action(function () {
         const factoryActions = ["ls", "create", "edit", "del"]

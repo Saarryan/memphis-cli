@@ -4,14 +4,14 @@ const config = require("../config/config.json")
 
 const factories = [{
     factory_name: "factory1",
-    project_name: "project1",
+    application_name: "application1",
     retention_type: "time",
     retentention_value: "1 week",
     max_throughput_type: "messsages",
     max_throughput_value: "100000",
 }, {
     factory_name: "factory2",
-    project_name: "project1",
+    application_name: "application1",
     retention_type: "time",
     retentention_value: "1 day",
     max_throughput_type: "bytes",
@@ -19,7 +19,7 @@ const factories = [{
 },
 {
     factory_name: "factory3",
-    project_name: "project1",
+    application_name: "application1",
     retention_type: "time",
     retentention_value: "1 week",
     max_throughput_type: "bytes",
@@ -27,7 +27,7 @@ const factories = [{
 },
 {
     factory_name: "factory4",
-    project_name: "project2",
+    application_name: "application2",
     retention_type: "time",
     retentention_value: "1 week",
     max_throughput_type: "bytes",
@@ -35,7 +35,7 @@ const factories = [{
 },
 {
     factory_name: "factory5",
-    project_name: "project3",
+    application_name: "application3",
     retention_type: "time",
     retentention_value: "1 week",
     max_throughput_type: "messsages",
@@ -44,14 +44,14 @@ const factories = [{
 ]
 
 
-exports.getFactories = async (project) => {
+exports.getFactories = async (application) => {
     try {
-        project && console.log(`flag -p with project name: ${project}`)
+        application && console.log(`flag -p with application name: ${application}`)
         console.log("\n")
         console.table(
             factories.map(factory => {
                 return {
-                    "project name": factory.project_name,
+                    "application name": factory.application_name,
                     "factory name": factory.factory_name,
                     "retention type": factory.retention_type,
                     "retentention value": factory.retentention_value,
@@ -68,11 +68,11 @@ exports.getFactories = async (project) => {
 exports.createFactory = async (name, options) => {
     try {
         // const response = await axios.post(config.SERVER_URL + ApiEndpoint.GET_ALL_QUEUES, {
-        //     project_name: name, 
-        //     project_description: options.desc
+        //     application_name: name, 
+        //     application_description: options.desc
         // });
-        console.log(`\Factory was created.`);
-        console.table([{ "project name": options.project, "factory name": name }])
+        console.log(`\nFactory was created.`);
+        console.table([{ "application name": options.application, "factory name": name }])
     } catch (error) {
         console.error(error);
     }
@@ -82,13 +82,13 @@ exports.editFactory = async (name, options) => {
     try {
         console.log(`\nFactory ${name} was edited.\nDetails:`);
         if (options.name) {
-            if (options.project)
-                console.table([{ "factory name": options.name, "project name": options.project }])
+            if (options.application)
+                console.table([{ "factory name": options.name, "application name": options.application }])
             else
                 console.table([{ "factory name": options.name }])
         }
         else
-            console.table([{ "project name": options.project }])
+            console.table([{ "application name": options.application }])
     } catch (error) {
         console.error(error);
     }

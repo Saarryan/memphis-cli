@@ -1,8 +1,8 @@
-const projectHelp = `Poject Commands:
-   ls                List of projects
-   create            Create new project  
-   edit              Edit project name and/or description
-   del               Delete a project
+const applicationHelp = `Application Commands:
+   ls                List of applications
+   create            Create new application  
+   edit              Edit application name and/or description
+   del               Delete a application
 `
 
 const factoryHelp = `Factory Commands:
@@ -21,6 +21,6 @@ const userHelp = `User Commands:
 
   `
 
-exports.projectHelp = projectHelp;
+exports.applicationHelp = applicationHelp;
 exports.factoryHelp = factoryHelp;
 exports.userHelp = userHelp;
