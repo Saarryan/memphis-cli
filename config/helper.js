@@ -1,15 +1,15 @@
-const applicationHelp = `Application Commands:
-   ls                List of applications
-   create            Create new application  
-   edit              Edit application name and/or description
-   del               Delete a application
-`
-
 const factoryHelp = `Factory Commands:
    ls                List of factories
    create            Create new factory  
-   edit              Edit factory name
+   edit              Edit factory name and/or description
    del               Delete a factory
+`
+
+const stationHelp = `Station Commands:
+   ls                List of stations
+   create            Create new station  
+   edit              Edit station name
+   del               Delete a station
 `
 
 const userHelp = `User Commands:
@@ -21,6 +21,6 @@ const userHelp = `User Commands:
 
   `
 
-exports.applicationHelp = applicationHelp;
 exports.factoryHelp = factoryHelp;
+exports.stationHelp = stationHelp;
 exports.userHelp = userHelp;

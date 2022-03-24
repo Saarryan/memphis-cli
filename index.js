@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 const commander = require("commander");
 
-const application = require("./actions/application")
 const factory = require("./actions/factory")
+const station = require("./actions/station")
 const user = require("./actions/users")
 const config = require("./actions/config")
 const helper = require("./config/helper")
@@ -11,8 +11,8 @@ const program = new commander.Command();
 
 program
     .version('0.1.0')
-    .description('Strech CLI')
-    .addHelpText('before', `${helper.applicationHelp}\n${helper.factoryHelp}\n${helper.userHelp}`)
+    .description('Memphis CLI')
+    .addHelpText('before', `${helper.factoryHelp}\n${helper.stationHelp}\n${helper.userHelp}`)
 
 
 program
@@ -21,40 +21,40 @@ program
     .option("-u, --user <user>", "User")
     .option("-p, --password <password>", "Password")//, "default description")
     .option("-s, --server <server>", "Server")
-    .addHelpText('before', helper.applicationHelp)
+    .addHelpText('before', helper.factoryHelp)
     .action(function () {
         config(this.opts())
     })
 
 program
-    .command('application')
+    .command('factory')
     .argument('[command]')
-    .option("-n, --name <application-name>", "Application name")
-    .option("-d, --desc <description>", "Application description")//, "default description")
-    .addHelpText('before', helper.applicationHelp)
+    .option("-n, --name <factory-name>", "Factory name")
+    .option("-d, --desc <description>", "Factory description")//, "default description")
+    .addHelpText('before', helper.factoryHelp)
     .action(function () {
-        const applicationActions = ["ls", "create", "edit", "del"]
-        if (!this.args?.length|| !applicationActions.includes(this.args[0])) {
+        const factoryActions = ["ls", "create", "edit", "del"]
+        if (!this.args?.length|| !factoryActions.includes(this.args[0])) {
             console.log(program.commands[0].help())
         }
         else {
-            application.applicationMenu(this.args, this.opts())
+            factory.factoryMenu(this.args, this.opts())
         }
     })
 
 program
-    .command('factory')
+    .command('station')
     .argument('[command]')
-    .option("-n, --name <facroty-name>", "Factory name")
-    .option("-p, --application <application>", "Application name", "defultApplication")
-    .addHelpText('before', helper.factoryHelp)
+    .option("-n, --name <station-name>", "Station name")
+    .option("-p, --factory <factory>", "Factory name", "defultFactory")
+    .addHelpText('before', helper.stationHelp)
     .action(function () {
-        const factoryActions = ["ls", "create", "edit", "del"]
-        if (!this.args?.length || !factoryActions.includes(this.args[0])) {
+        const stationActions = ["ls", "create", "edit", "del"]
+        if (!this.args?.length || !stationActions.includes(this.args[0])) {
             console.log(program.commands[1].help())
         }
         else {
-            factory.factoryMenu(this.args, this.opts())
+            station.stationMenu(this.args, this.opts())
         }
     })
 
