@@ -1,6 +1,5 @@
 const axios = require('axios').default;
-const { ApiEndpoint } = require("../apiEndpoints")
-const config = require("../config/config.json")
+const ApiEndpoint = require("../apiEndpoints")
 
 const applications = [{
     application_name: "application 1",
@@ -25,20 +24,20 @@ const applications = [{
 
 
 exports.getApplications = async () => {
-    try {
-        const response = await axios.get(config.SERVER_URL + ApiEndpoint.GET_ALL_QUEUES);
-        // console.log(response);
-        console.table(
-            applications.map(application => {
-                return {
-                    "Application name": application.application_name,
-                    "Application description": application.application_description,
-                };
-            })
-        );
-    } catch (error) {
-        console.error(error);
-    }
+    // try {
+    //     const response = await axios.get(config.SERVER_URL + ApiEndpoint.GET_ALL_QUEUES);
+    //     // console.log(response);
+    //     console.table(
+    //         applications.map(application => {
+    //             return {
+    //                 "Application name": application.application_name,
+    //                 "Application description": application.application_description,
+    //             };
+    //         })
+    //     );
+    // } catch (error) {
+    //     console.error(error);
+    // }
 }
 
 exports.createApplication = async (name, options) => {

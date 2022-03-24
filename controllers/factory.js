@@ -1,6 +1,5 @@
 const axios = require('axios').default;
-const { ApiEndpoint } = require("../apiEndpoints")
-const config = require("../config/config.json")
+const ApiEndpoint = require("../apiEndpoints")
 
 const factories = [{
     factory_name: "factory1",
