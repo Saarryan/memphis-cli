@@ -1,70 +1,148 @@
-const axios = require('axios').default;
 const ApiEndpoint = require("../apiEndpoints")
-
-const factories = [{
-    factory_name: "factory 1",
-    factory_description: "factory description 1",
-}, {
-    factory_name: "factory 2",
-    factory_description: "factory description 2",
-},
-{
-    factory_name: "factory 3",
-    factory_description: "factory description 3",
-},
-{
-    factory_name: "factory 4",
-    factory_description: "",
-},
-{
-    factory_name: "factory 5",
-    factory_description: null,
-},
-]
-
+const httpRequest = require("../services/httpRequest")
+const isValidToken = require("../utils/validateToken")
+const login = require("./login")
+const fs = require('fs');
 
 exports.getFactories = async () => {
-    // try {
-    //     const response = await axios.get(config.SERVER_URL + ApiEndpoint.GET_ALL_QUEUES);
-    //     // console.log(response);
-    //     console.table(
-    //         factorys.map(factory => {
-    //             return {
-    //                 "factory name": factory.factory_name,
-    //                 "factory description": factory.factory_description,
-    //             };
-    //         })
-    //     );
-    // } catch (error) {
-    //     console.error(error);
-    // }
+    if (!isValidToken())
+        login()
+    try {
+        const data = fs.readFileSync('.memconfig', 'utf8')
+        if (data.length == 0) {
+            return
+        }
+        const credentials = JSON.parse(data.toString())
+        httpRequest({
+            method: "GET",
+            url: `${credentials.server}${ApiEndpoint.GET_ALL_FACTORIES}`,
+            headers: { 'Authorization': 'Bearer ' + credentials.jwt },
+            bodyParams: null,
+            queryParams: null,
+            timeout: 0,
+        })
+            .then(res => {
+                console.table(
+                    res.map(factory => {
+                        return {
+                            "name": factory.name,
+                            "description": factory.description,
+                            "created_by_user": factory.created_by_user,
+                            "creation_date": factory.creation_date,
+                        };
+                    }))
+            })
+            .catch((error) => {
+                console.error(error); //handel it
+            })
+    } catch (error) {
+        console.error((error));
+    }
 }
 
-exports.createFactory = async (name, options) => {
+exports.createFactory = async (factory) => {
+    if (!isValidToken())
+        login()
     try {
-        // const response = await axios.post(config.SERVER_URL + ApiEndpoint.GET_ALL_QUEUES, {
-        //     factory_name: name, 
-        //     factory_description: options.desc
-        // });
-        console.log(`\nFactory was created. \nDetails:\n  name: ${name}\n  description: ${options.desc}`);
+        const data = fs.readFileSync('.memconfig', 'utf8')
+        if (data.length == 0) {
+            return
+        }
+        const credentials = JSON.parse(data.toString())
+        httpRequest({
+            method: "POST",
+            url: `${credentials.server}${ApiEndpoint.CREATE_FACTORY}`,
+            headers: { 'Authorization': 'Bearer ' + credentials.jwt },
+            bodyParams: {
+                "name": factory.name,
+                "description": factory.desc
+            },
+            queryParams: null,
+            timeout: 0,
+        })
+            .then(res => {
+                console.log(`\nFactory ${res.name} was created.`);
+            })
+            .catch((error) => {
+                console.error(error); //handel it
+            })
     } catch (error) {
         console.error(error);
     }
 }
 
-exports.editFactory = async (name, options) => {
-    try {
-        console.log(`\nFactory ${name} was edited. \nDetails:`);
-        options.name && console.log(`  name: ${options.name}`);
-        options.desc && console.log(`  description: ${options.desc}`);
-    } catch (error) {
-        console.error(error);
-    }
-}
+// exports.editFactory = async (name, options) => {
+//     if (!isValidToken())
+//         login()
+//     try {
+//         fs.readFile('.memconfig', 'utf8', (err, data) => {
+//             if (err) {
+//                 console.error(err)
+//                 return
+//             }
+//             let credentials = JSON.parse(data);
+//             httpRequest({
+//                 method: "PUT",
+//                 url: `${credentials.server}${ApiEndpoint.EDIT_FACTORY}`,
+//                 headers: { 'Authorization': 'Bearer ' + credentials.jwt },
+//                 bodyParams: {
+//                     "application_name": factory.name,
+// {
+//     "factory_name": "fdfd",
+//     "factory_new_name": "idan test",
+// 	"factory_new_description": "fdfdfdfd"
+// }
+//                 },
+//                 queryParams: null,
+//                 timeout: 0,
+//             })
+//                 .then(res => {
+//                     //fix console.
+//                     Object.keys(res).length === 0 ? console.log(`\nFactory ${factory.name} was removed.`) : console.log(`\nFailed removing factory ${factory.name}.`)
+//                     console.log(res)
+//                     // console.log(`\nFactory ${res.name} was deleted.`);
+//                 })
+//                 .catch((error) => {
+//                     console.log(`\nFailed removing factory ${factory.name}.`)
+//                 })
+//         })
+//     // try {
+//     //     console.log(`\nFactory ${name} was edited. \nDetails:`);
+//     //     options.name && console.log(`  name: ${options.name}`);
+//     //     options.desc && console.log(`  description: ${options.desc}`);
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
 
-exports.removenFactory = async (name) => {
+exports.removenFactory = async (factory) => {
+    if (!isValidToken())
+        login()
     try {
-        console.log(`\nFactory ${name} was removed.`);
+        const data = fs.readFileSync('.memconfig', 'utf8')
+        if (data.length == 0) {
+            return
+        }
+        const credentials = JSON.parse(data.toString())
+        httpRequest({
+            method: "DELETE",
+            url: `${credentials.server}${ApiEndpoint.REMOVE_FACTORY}`,
+            headers: { 'Authorization': 'Bearer ' + credentials.jwt },
+            bodyParams: {
+                "factory_name": factory.name,
+            },
+            queryParams: null,
+            timeout: 0,
+        })
+            .then(res => {
+                //fix console.
+                Object.keys(res).length === 0 ? console.log(`\nFactory ${factory.name} was removed.`) : console.log(`\nFailed removing factory ${factory.name}.`)
+                console.log(res)
+                // console.log(`\nFactory ${res.name} was deleted.`);
+            })
+            .catch((error) => {
+                console.log(`\nFailed removing factory ${factory.name}.`)
+            })
     } catch (error) {
         console.error(error);
     }

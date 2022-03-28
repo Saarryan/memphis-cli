@@ -6,10 +6,10 @@ exports.factorynMenu = (action, options) => {
             factory.getFactories()
             break;
         case "create":
-            if (!action[1])
+            if (!options.name)
                 console.log("\nFactory name is required. Use command:\nmem factory create <factory-name> --desc <factory-description>")
             else
-            factory.createFactory(action[1], options)
+                factory.createFactory(options)
             break;
         case "edit":
             if (!action[1])
@@ -17,13 +17,13 @@ exports.factorynMenu = (action, options) => {
             else if (!(options.name || options.desc))
                 console.log("\nSome flag required")
             else
-            factory.editFactory(action[1], options)
+                factory.editFactory(action[1], options)
             break;
         case "del":
-            if (!action[1])
-                console.log("\nFactory name is required. Use command:\nmem factory del <factory-name> ")
+            if (!options.name)
+                console.log("\nFactory name is required. Use command:\nmem factory del --name <factory-name> ")
             else
-            factory.removeFactory(action[1])
+                factory.removenFactory(options)
             break;
         default:
             return

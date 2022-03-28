@@ -2,8 +2,6 @@ const users = require("../controllers/users")
 const inputValidation = require("../utils/inputValidations")
 
 exports.userMenu = (action, options) => {
-    // console.log(action)
-    // console.log(options)
     switch (action[0]) {
         case "ls":
             users.getUsers()

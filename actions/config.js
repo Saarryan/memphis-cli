@@ -9,12 +9,10 @@ module.exports = (credentials) => {
           server: credentials.server,
      };
      const data = JSON.stringify(credentialsDetails);
-     fs.writeFile('.memconfig', data, function (err) {
-          if (err) {
-               console.log('There has been an error saving your configuration data.');
-               console.log(err.message);
-               return;
-          }
-     });
-     login()
+     fs.writeFileSync('.memconfig', data);
+     return login()
+          .then(res => { return res })
+          .catch((error) => {
+               return error
+          });
 }

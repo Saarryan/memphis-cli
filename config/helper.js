@@ -12,13 +12,11 @@ const stationHelp = `Station Commands:
    del               Delete a station
 `
 
-const userHelp = `User Commands:
-  ls                List of users
-  create            Create new user  
-  edit              Edit user ... 
-  del               Delete user
-  regeneratepass    Regenerate new password
-
+const userHelp =    `User Commands:
+  ls                 List of users
+  add                Add new user  
+  del                Delete user
+  edithubcred        Edit hub credentials
   `
 
 exports.factoryHelp = factoryHelp;

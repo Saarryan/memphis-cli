@@ -21,7 +21,7 @@ program
     .option("-u, --user <user>", "User")
     .option("-p, --password <password>", "Password")//, "default description")
     .option("-s, --server <server>", "Server")
-    .addHelpText('before', helper.factoryHelp)
+    .addHelpText('before', helper.factoryHelp) //TODO
     .action(function () {
         config(this.opts())
     })
@@ -34,11 +34,11 @@ program
     .addHelpText('before', helper.factoryHelp)
     .action(function () {
         const factoryActions = ["ls", "create", "edit", "del"]
-        if (!this.args?.length|| !factoryActions.includes(this.args[0])) {
-            console.log(program.commands[0].help())
+        if (!this.args?.length || !factoryActions.includes(this.args[0])) {
+            console.log(program.commands[1].help())
         }
         else {
-            factory.factoryMenu(this.args, this.opts())
+            factory.factorynMenu(this.args, this.opts())
         }
     })
 
@@ -51,7 +51,7 @@ program
     .action(function () {
         const stationActions = ["ls", "create", "edit", "del"]
         if (!this.args?.length || !stationActions.includes(this.args[0])) {
-            console.log(program.commands[1].help())
+            console.log(program.commands[2].help())
         }
         else {
             station.stationMenu(this.args, this.opts())
@@ -70,10 +70,8 @@ program
     .addHelpText('before', helper.userHelp)
     .action(function () {
         const userActions = ["ls", "add", "del", "edithubcred"]
-        // console.log(this.args)
-        // console.log(this.opts())
         if (!this.args?.length || !userActions.includes(this.args[0])) {
-            console.log(program.commands[2].help())
+            console.log(program.commands[3].help())
         }
         else {
             user.userMenu(this.args, this.opts())
