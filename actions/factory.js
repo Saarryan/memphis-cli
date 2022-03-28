@@ -25,7 +25,7 @@ exports.factorynMenu = (action, options) => {
             break;
         case "del":
             if (!action[1])
-                console.log("\nFactory name is required. Use command:\nmem factory del <factory-name> ")
+                console.log("Factory name is required. Use command:\nmem factory del <factory-name> ")
             else
                 factory.removenFactory(action[1])
             break;

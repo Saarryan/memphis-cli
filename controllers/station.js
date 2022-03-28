@@ -1,5 +1,6 @@
-const axios = require('axios').default;
 const ApiEndpoint = require("../apiEndpoints")
+const httpRequest = require("../services/httpRequest")
+const fs = require('fs');
 
 const stations = [{
     factory_name: "factory1",
@@ -77,6 +78,33 @@ exports.createStation = async (name, options) => {
     }
 }
 
+exports.getStatopnInfo = async (station) => {
+    try {
+        const data = fs.readFileSync('.memconfig', 'utf8')
+        if (data.length == 0) {
+            return
+        }
+        const credentials = JSON.parse(data.toString())
+        httpRequest({
+            method: "GET",
+            url: `${credentials.server}${ApiEndpoint.GET_STATION_INFO}?station_name=${station}`,
+            headers: { 'Authorization': 'Bearer ' + credentials.jwt },
+            bodyParams: null,
+            queryParams: null,
+            timeout: 0,
+        })
+            .then(res => {
+                console.log("Station info:")
+                console.log(res)
+            })
+            .catch((error) => {
+                console.log(`Failed fetching ${station} station details.`)
+            })
+    } catch (error) {
+        console.error(error);
+    }
+}
+
 exports.editStation = async (name, options) => {
     try {
         console.log(`\nStation ${name} was edited.\nDetails:`);
@@ -93,9 +121,29 @@ exports.editStation = async (name, options) => {
     }
 }
 
-exports.removeStation = async (name) => {
+exports.removeStation = async (station) => {
     try {
-        console.log(`\nStation ${name} was removed.`);
+        const data = fs.readFileSync('.memconfig', 'utf8')
+        if (data.length == 0) {
+            return
+        }
+        const credentials = JSON.parse(data.toString())
+        httpRequest({
+            method: "DELETE",
+            url: `${credentials.server}${ApiEndpoint.REMOVE_STATION}`,
+            headers: { 'Authorization': 'Bearer ' + credentials.jwt },
+            bodyParams: {
+                "station_name": station,
+            },
+            queryParams: null,
+            timeout: 0,
+        })
+            .then(res => {
+                Object.keys(res).length === 0 ? console.log(`Statoin ${station} was removed.`) : console.log(`Failed removing station ${station}.`)
+            })
+            .catch((error) => {
+                console.log(`Failed removing station ${station}.`)
+            })
     } catch (error) {
         console.error(error);
     }
