@@ -19,18 +19,26 @@ program
     .command('config')
     .argument('[command]')
     .option("-u, --user <user>", "User")
-    .option("-p, --password <password>", "Password")//, "default description")
+    .option("-p, --password <password>", "Password")
     .option("-s, --server <server>", "Server")
-    .addHelpText('before', helper.factoryHelp) //TODO
+    .addHelpText('before', helper.configrHelp)
     .action(function () {
-        config(this.opts())
+        if (Object.keys(this.opts()).length === 0) {
+            console.log(program.commands[0].help())
+        }
+        else if (!this.opts().user || !this.opts().password || !this.opts().server) {
+            console.log("Use command: mem config --user <user> --password <password> --server <server>")
+        }
+        else {
+            config(this.opts())
+        }
     })
 
 program
     .command('factory')
     .argument('[command]')
     .option("-n, --name <factory-name>", "Factory name")
-    .option("-d, --desc <description>", "Factory description")//, "default description")
+    .option("-d, --desc <factory-description>", "Factory description")
     .addHelpText('before', helper.factoryHelp)
     .action(function () {
         const factoryActions = ["ls", "create", "edit", "del"]

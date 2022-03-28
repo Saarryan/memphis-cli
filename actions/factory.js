@@ -1,29 +1,33 @@
 const factory = require("../controllers/factory")
+const isValidToken = require("../utils/validateToken")
+const login = require("../controllers/login")
 
 exports.factorynMenu = (action, options) => {
+    if (!isValidToken())
+        login()
     switch (action[0]) {
         case "ls":
             factory.getFactories()
             break;
         case "create":
-            if (!options.name)
-                console.log("\nFactory name is required. Use command:\nmem factory create <factory-name> --desc <factory-description>")
+            if (!action[1])
+                console.log("Factory name is required. Use command:\nmem factory create <factory-name> --desc <factory-description>")
             else
-                factory.createFactory(options)
+                factory.createFactory(action[1], options)
             break;
         case "edit":
             if (!action[1])
-                console.log("\nFactory name is required. Use command:\nmem factory edit <factory-name> --name <new-name> --desc <new-factory-name>")
+                console.log("Factory name is required. Use command:\nmem factory edit <factory-name> --name <new-factory-name> --desc <new-factory-description>")
             else if (!(options.name || options.desc))
-                console.log("\nSome flag required")
+                console.log("New factory name or description is required. Use command:\nmem factory edit <factory-name> --name <new-factory-name> --desc <new-factory-description>")
             else
                 factory.editFactory(action[1], options)
             break;
         case "del":
-            if (!options.name)
-                console.log("\nFactory name is required. Use command:\nmem factory del --name <factory-name> ")
+            if (!action[1])
+                console.log("\nFactory name is required. Use command:\nmem factory del <factory-name> ")
             else
-                factory.removenFactory(options)
+                factory.removenFactory(action[1])
             break;
         default:
             return

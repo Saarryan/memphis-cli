@@ -11,7 +11,15 @@ module.exports = (credentials) => {
      const data = JSON.stringify(credentialsDetails);
      fs.writeFileSync('.memconfig', data);
      return login()
-          .then(res => { return res })
+          .then(res => {
+               if (res)
+                    console.log("Connected successfully to Memphis server.")
+               else {
+                    console.log("Failes connecting to Memphis server.")
+                    fs.writeFileSync('.memconfig', "");
+               }
+               return res
+          })
           .catch((error) => {
                return error
           });
