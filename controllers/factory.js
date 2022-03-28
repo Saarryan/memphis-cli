@@ -12,6 +12,7 @@ exports.getFactories = async () => {
         if (data.length == 0) {
             return
         }
+        
         const credentials = JSON.parse(data.toString())
         httpRequest({
             method: "GET",
