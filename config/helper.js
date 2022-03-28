@@ -19,6 +19,13 @@ const userHelp =    `User Commands:
   edithubcred        Edit hub credentials
   `
 
+const configrHelp = `Config Commands:
+config               Login configuration
+
+Use command: mem config --user <user> --password <password> --server <server>
+`
+
 exports.factoryHelp = factoryHelp;
 exports.stationHelp = stationHelp;
 exports.userHelp = userHelp;
+exports.configrHelp = configrHelp;

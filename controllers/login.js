@@ -29,7 +29,7 @@ module.exports = async () => {
         })
         .catch((error) => {
             return false
-            console.error(error);
+            
             // console.error(error);
         })
 }

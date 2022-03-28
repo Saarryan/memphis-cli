@@ -1,12 +1,8 @@
 const ApiEndpoint = require("../apiEndpoints")
 const httpRequest = require("../services/httpRequest")
-const isValidToken = require("../utils/validateToken")
-const login = require("./login")
 const fs = require('fs');
 
 exports.getUsers = async () => {
-    if (!isValidToken())
-        login()
     try {
         const data = fs.readFileSync('.memconfig', 'utf8')
         if (data.length == 0) {
@@ -40,8 +36,6 @@ exports.getUsers = async () => {
 }
 
 exports.addUser = async (user) => {
-    if (!isValidToken())
-        login()
     try {
         const data = fs.readFileSync('.memconfig', 'utf8')
         if (data.length == 0) {
@@ -64,7 +58,7 @@ exports.addUser = async (user) => {
             timeout: 0,
         })
             .then(res => {
-                console.log(`\nUser ${res.username} was created.`);
+                console.log(`User ${res.username} was created.`);
             })
             .catch((error) => {
                 console.error(JSON.stringify(error))
@@ -75,8 +69,6 @@ exports.addUser = async (user) => {
 }
 
 exports.removeUser = async (user) => {
-    if (!isValidToken())
-        login()
     try {
         const data = fs.readFileSync('.memconfig', 'utf8')
         if (data.length == 0) {
@@ -87,15 +79,15 @@ exports.removeUser = async (user) => {
             method: "DELETE",
             url: `${credentials.server}${ApiEndpoint.REMOVE_USER}`,
             headers: { 'Authorization': 'Bearer ' + credentials.jwt },
-            bodyParams: { "username": user.name },
+            bodyParams: { "username": user },
             queryParams: null,
             timeout: 0,
         })
             .then(res => {
-                Object.keys(res).length === 0 ? console.log(`\nUser ${user.name} was removed.`) : console.log(`\nFailed removing user ${user.name}.`)
+                Object.keys(res).length === 0 ? console.log(`User ${user} was removed.`) : console.log(`Failed removing user ${user}.`)
             })
             .catch((error) => {
-                console.log(`\nFailed removing user ${user.name}.`)
+                console.log(`Failed removing user ${user}.`)
             })
     } catch (error) {
         console.error((error));
@@ -103,8 +95,6 @@ exports.removeUser = async (user) => {
 }
 
 exports.edithubcred = async (user) => {
-    if (!isValidToken())
-        login()
     try {
         const data = fs.readFileSync('.memconfig', 'utf8')
         if (data.length == 0) {
@@ -123,11 +113,11 @@ exports.edithubcred = async (user) => {
             timeout: 0,
         })
             .then(res => {
-                user.hubuser && console.log(`\nUser's hub name was updated.`)
-                user.hubpass && console.log(`\nUser's hub password was updated.`)
+                user.hubuser && console.log(`User's hub name was updated.`)
+                user.hubpass && console.log(`User's hub password was updated.`)
             })
             .catch((error) => {
-                console.error(`\nFailed updating hub credentials.`)
+                console.error(`Failed updating hub credentials.`)
             })
     } catch (error) {
         console.error((error));
