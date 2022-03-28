@@ -8,6 +8,7 @@ const factoryHelp = `Factory Commands:
 const stationHelp = `Station Commands:
    ls                List of stations
    create            Create new station  
+   info              Specific station's info
    edit              Edit station name
    del               Delete a station
 `

@@ -12,4 +12,8 @@ module.exports = {
     REMOVE_FACTORY: '/api-gw/factories/removeFactory',
     EDIT_FACTORY: '/api-gw/factories/editFactory',
 
+    //Stations
+    GET_STATION_INFO: '/api-gw/stations/getStation',
+    CREATE_STATION: '/api-gw/stations/createStation',
+    REMOVE_STATION: '/api-gw/stations/removeStation',
 }

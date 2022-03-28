@@ -54,10 +54,10 @@ program
     .command('station')
     .argument('[command]')
     .option("-n, --name <station-name>", "Station name")
-    .option("-p, --factory <factory>", "Factory name", "defultFactory")
+    .option("-f, --factory <factory>", "Factory name", "defultFactory")
     .addHelpText('before', helper.stationHelp)
     .action(function () {
-        const stationActions = ["ls", "create", "edit", "del"]
+        const stationActions = ["ls", "create", "info", "edit", "del"]
         if (!this.args?.length || !stationActions.includes(this.args[0])) {
             console.log(program.commands[2].help())
         }
