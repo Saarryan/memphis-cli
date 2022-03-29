@@ -2,9 +2,7 @@ const factory = require("../controllers/factory")
 const isValidToken = require("../utils/validateToken")
 const login = require("../controllers/login")
 
-exports.factorynMenu = (action, options) => {
-    if (!isValidToken())
-        login()
+const handleFactoryActions = (action, options) => {
     switch (action[0]) {
         case "ls":
             factory.getFactories()
@@ -32,4 +30,18 @@ exports.factorynMenu = (action, options) => {
         default:
             return
     }
+}
+
+exports.factorynMenu = (action, options) => {
+    if (!isValidToken()) {
+        login()
+            .then(res => {
+                handleFactoryActions(action, options)
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+    }
+    else handleFactoryActions(action, options)
 };
+
