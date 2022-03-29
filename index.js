@@ -55,6 +55,12 @@ program
     .argument('[command]')
     .option("-n, --name <station-name>", "Station name")
     .option("-f, --factory <factory>", "Factory name", "defultFactory")
+    .option("-rt, --retentiontype <retention-type>", "Retention type")
+    .option("-rv, --retentionvalue <retention-value>", "Retention value")
+    .option("-s, --storage <storage-type>", "Storage type")
+    .option("-r, --replicas <replicas>", "Replicas")
+    .option("-de, --dedupenabled <dedup-enabled>", "Dedup enabled")
+    .option("-dw, --dedupwindow <dedup-window-in-ms>", "Dedup window in ms")
     .addHelpText('before', helper.stationHelp)
     .action(function () {
         const stationActions = ["ls", "create", "info", "edit", "del"]

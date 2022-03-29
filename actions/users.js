@@ -3,9 +3,7 @@ const inputValidation = require("../utils/inputValidations")
 const isValidToken = require("../utils/validateToken")
 const login = require("../controllers/login")
 
-exports.userMenu = (action, options) => {
-    if (!isValidToken())
-        login()
+const handleUserActions = (action, options) => {
     switch (action[0]) {
         case "ls":
             users.getUsers()
@@ -31,4 +29,17 @@ exports.userMenu = (action, options) => {
         default:
             return
     }
+}
+
+exports.userMenu = (action, options) => {
+    if (!isValidToken()) {
+        login()
+            .then(res => {
+                handleUserActions(action, options)
+            })
+            .catch((error) => {
+                console.error(error);
+            })
+    }
+    else handleUserActions(action, options)
 };

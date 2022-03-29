@@ -18,6 +18,7 @@ exports.getUsers = async () => {
             timeout: 0,
         })
             .then(res => {
+                res.sort((a, b) => a.creation_date.localeCompare(b.creation_date))
                 console.table(
                     res.map(user => {
                         return {

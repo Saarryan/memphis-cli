@@ -65,14 +65,38 @@ exports.getStations = async (application) => {
     }
 }
 
-exports.createStation = async (name, options) => {
+exports.createStation = async (station, options) => {
     try {
-        // const response = await axios.post(config.SERVER_URL + ApiEndpoint.GET_ALL_QUEUES, {
-        //     application_name: name, 
-        //     application_description: options.desc
-        // });
-        console.log(`\nStation was created.`);
-        console.table([{ "application name": options.application, "station name": name }])
+        const data = fs.readFileSync('.memconfig', 'utf8')
+        if (data.length == 0) {
+            return
+        }
+        const credentials = JSON.parse(data.toString())
+        httpRequest({
+            method: "POST",
+            url: `${credentials.server}${ApiEndpoint.CREATE_STATION}`,
+            headers: { 'Authorization': 'Bearer ' + credentials.jwt },
+            bodyParams: {
+                "name": station,
+                "factory_name": options.factory,
+                "retention_type": options.retentiontype,
+                "retention_value": options.retentionvalue,
+                "storage_type": options.storage,
+                "replicas": options.replicas,
+                "dedup_enabled": options.dedupenabled,
+                "dedup_window_in_ms": options.dedupwindow
+            },
+            queryParams: null,
+            timeout: 0,
+        })
+            .then(res => {
+                console.log(`Station ${station} was created with the following details:`)
+                console.log(res)
+            })
+            .catch((error) => {
+                console.log(error)
+                console.log(`Failed creating ${station} station.`)
+            })
     } catch (error) {
         console.error(error);
     }
@@ -105,21 +129,21 @@ exports.getStatopnInfo = async (station) => {
     }
 }
 
-exports.editStation = async (name, options) => {
-    try {
-        console.log(`\nStation ${name} was edited.\nDetails:`);
-        if (options.name) {
-            if (options.application)
-                console.table([{ "station name": options.name, "application name": options.application }])
-            else
-                console.table([{ "station name": options.name }])
-        }
-        else
-            console.table([{ "application name": options.application }])
-    } catch (error) {
-        console.error(error);
-    }
-}
+// exports.editStation = async (name, options) => {
+//     try {
+//         console.log(`\nStation ${name} was edited.\nDetails:`);
+//         if (options.name) {
+//             if (options.application)
+//                 console.table([{ "station name": options.name, "application name": options.application }])
+//             else
+//                 console.table([{ "station name": options.name }])
+//         }
+//         else
+//             console.table([{ "application name": options.application }])
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
 
 exports.removeStation = async (station) => {
     try {
