@@ -44,26 +44,67 @@ const stations = [{
 ]
 
 
-exports.getStations = async (application) => {
+exports.getAllStations = async () => {
     try {
-        application && console.log(`flag -p with application name: ${application}`)
-        console.log("\n")
-        console.table(
-            stations.map(station => {
-                return {
-                    "application name": station.application_name,
-                    "station name": station.factory_name,
-                    "retention type": station.retention_type,
-                    "retentention value": station.retentention_value,
-                    "max_throughput type": station.max_throughput_type,
-                    "max_throughput value": station.max_throughput_value,
-                };
+        const data = fs.readFileSync('.memconfig', 'utf8')
+        if (data.length == 0) {
+            return
+        }
+        const credentials = JSON.parse(data.toString())
+        httpRequest({
+            method: "GET",
+            url: `${credentials.server}${ApiEndpoint.GET_ALL_STATIONS}`,
+            headers: { 'Authorization': 'Bearer ' + credentials.jwt },
+            bodyParams: null,
+            queryParams: null,
+            timeout: 0,
+        })
+            .then(res => {
+                console.table(
+                    res.map(station => {
+                        return {
+                            // "factory name": station.application_name,
+                            "name": station.name,
+                            "factory": station.factory_name,
+                            "created by": station.created_by_user,
+                            "creation": station.creation_date.substring(0,10),
+                            "retention type": station.retention_type,
+                            "retentention value": station.retention_value,
+                            "replicas": station.replicas,
+                            "dedup window ms": station.dedup_window_in_ms,
+                            
+                        };
+                    })
+                )
             })
-        );
+            .catch((error) => {
+                // console.log(error)
+                console.log("Failed fetching all stations")
+            })
     } catch (error) {
-        console.error(error);
+        // console.error(error);
+        console.log("Failed fetching all stations")
     }
 }
+//     try {
+//         application && console.log(`flag -p with application name: ${application}`)
+//         console.log("\n")
+//         console.table(
+//             stations.map(station => {
+//                 return {
+//                     "application name": station.application_name,
+//                     "station name": station.factory_name,
+//                     "retention type": station.retention_type,
+//                     "retentention value": station.retentention_value,
+//                     "max_throughput type": station.max_throughput_type,
+//                     "max_throughput value": station.max_throughput_value,
+//                 };
+//             })
+//         );
+//     } catch (error) {
+//         console.error(error);
+//     }
+// }
 
 exports.createStation = async (station, options) => {
     try {
@@ -91,14 +132,14 @@ exports.createStation = async (station, options) => {
         })
             .then(res => {
                 console.log(`Station ${station} was created with the following details:`)
-                console.log(res)
             })
             .catch((error) => {
-                console.log(error)
+                // console.log(error)
                 console.log(`Failed creating ${station} station.`)
             })
     } catch (error) {
-        console.error(error);
+        // console.error(error);
+        console.log(`Failed creating ${station} station.`)
     }
 }
 
@@ -125,7 +166,8 @@ exports.getStatopnInfo = async (station) => {
                 console.log(`Failed fetching ${station} station details.`)
             })
     } catch (error) {
-        console.error(error);
+        // console.error(error);
+        console.log(`Failed fetching ${station} station details.`)
     }
 }
 
@@ -169,6 +211,7 @@ exports.removeStation = async (station) => {
                 console.log(`Failed removing station ${station}.`)
             })
     } catch (error) {
-        console.error(error);
+        // console.error(error);
+        console.log(`Failed removing station ${station}.`)
     }
 }
