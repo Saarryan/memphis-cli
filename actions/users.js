@@ -38,7 +38,8 @@ exports.userMenu = (action, options) => {
                 handleUserActions(action, options)
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
+                console.log("Failed connecting")
             })
     }
     else handleUserActions(action, options)

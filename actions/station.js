@@ -4,10 +4,9 @@ const login = require("../controllers/login")
 
 const handleStatoionActions = (action, options) => {
     switch (action[0]) {
-        // case "ls":
-        //     //mock
-        //     station.getStations(options.station)
-        //     break;
+        case "ls":
+            station.getAllStations()
+            break;
         case "create":
             if (!action[1]) {
                 console.log("Station name is required. Use command:\nmem station create <station-name> --factory <factory> --retentiontype <retention-type> --retentionvalue <retention-value> --storage <storage-type> --replicas <replicas> --dedupenabled <dedup-enabled> --dedupwindow <dedup-window-in-ms>")
@@ -49,7 +48,8 @@ exports.stationMenu = (action, options) => {
                 handleStatoionActions(action, options)
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
+                console.log("Failed connecting")
             })
     }
     else handleStatoionActions(action, options)

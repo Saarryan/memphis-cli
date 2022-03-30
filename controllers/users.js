@@ -29,10 +29,12 @@ exports.getUsers = async () => {
                     }))
             })
             .catch((error) => {
-                console.error(error);
+                // console.error(error);
+                console.log("Failed fetching all users")
             })
     } catch (error) {
-        console.error((error));
+        // console.error((error));
+        console.log("Failed fetching all users")
     }
 }
 
@@ -62,10 +64,12 @@ exports.addUser = async (user) => {
                 console.log(`User ${res.username} was created.`);
             })
             .catch((error) => {
-                console.error(JSON.stringify(error))
+                // console.error(JSON.stringify(error))
+                console.log(`Failed adding ${user.name} user.`)
             })
     } catch (error) {
-        console.error((error));
+        // console.error((error));
+        console.log(`Failed adding ${user.name} user.`)
     }
 }
 
@@ -91,7 +95,8 @@ exports.removeUser = async (user) => {
                 console.log(`Failed removing user ${user}.`)
             })
     } catch (error) {
-        console.error((error));
+        // console.error((error));
+        console.log(`Failed removing user ${user}.`)
     }
 }
 
@@ -121,6 +126,7 @@ exports.edithubcred = async (user) => {
                 console.error(`Failed updating hub credentials.`)
             })
     } catch (error) {
-        console.error((error));
+        // console.error((error));
+        console.error(`Failed updating hub credentials.`)
     }
 }

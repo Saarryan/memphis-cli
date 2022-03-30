@@ -29,10 +29,12 @@ exports.getFactories = async () => {
                     }))
             })
             .catch((error) => {
-                console.error(error); //handel it
+                console.log("Failed fetching all factories")
+                // console.error(error); //handel it
             })
     } catch (error) {
-        console.error((error));
+        console.log("Failed fetching all factories")
+        // console.error((error));
     }
 }
 
@@ -58,10 +60,12 @@ exports.createFactory = async (factory, options) => {
                 console.log(`Factory ${res.name} was created.`);
             })
             .catch((error) => {
-                console.error(error); //handel it
+                console.log(`Failed creating factory ${res.name}.`)
+                // console.error(error); //handel it
             })
     } catch (error) {
-        console.error(error);
+        // console.error(error);
+        console.log(`Failed creating factory ${res.name}.`)
     }
 }
 
@@ -88,10 +92,12 @@ exports.editFactory = async (factory, options) => {
                 console.log(`Factory ${res.name} was edited.`);
             })
             .catch((error) => {
-                console.error(error); //handel it
+                console.log(`Failed editing factory ${res.name}.`)
+                // console.error(error); //handel it
             })
     } catch (error) {
-        console.error(error);
+        console.log(`Failed editing factory ${res.name}.`)
+        // console.error(error);
     }
 }
 
@@ -119,6 +125,7 @@ exports.removenFactory = async (factory) => {
                 console.log(`Failed removing factory ${factory}.`)
             })
     } catch (error) {
-        console.error(error);
+        // console.error(error);
+        console.log(`Failed removing factory ${factory}.`)
     }
 }

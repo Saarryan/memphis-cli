@@ -16,4 +16,6 @@ module.exports = {
     GET_STATION_INFO: '/api-gw/stations/getStation',
     CREATE_STATION: '/api-gw/stations/createStation',
     REMOVE_STATION: '/api-gw/stations/removeStation',
+    GET_ALL_STATIONS: '/api-gw/stations/getAllStations',
+
 }
