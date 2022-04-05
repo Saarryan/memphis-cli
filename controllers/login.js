@@ -5,7 +5,7 @@ const fs = require('fs');
 module.exports = async () => {
     const data = fs.readFileSync('.memconfig', 'utf8')
     if (data.length == 0) {
-        console.log("Please login.\nUse command: mem config --user <user> --password <password> --server <server>")
+        console.log("Please login.\nUse command: mem connect --user <user> --password <password> --server <server>")
         return false
     }
     const credentials = JSON.parse(data.toString())
