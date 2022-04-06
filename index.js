@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-const commander = require("commander");
+const commander = require('commander');
 
-const factory = require("./actions/factory")
-const station = require("./actions/station")
-const user = require("./actions/users")
-const connect = require("./actions/connect")
-const helper = require("./config/helper")
+const factory = require('./actions/factory')
+const station = require('./actions/station')
+const user = require('./actions/users')
+const connect = require('./actions/connect')
+const helper = require('./config/helper')
 
 const program = new commander.Command();
 
@@ -134,12 +134,6 @@ program
     .command('hub')
     .description('Memphis hub usage commands')
     .argument('<command>')
-    // .option("-n, --name <user-name>", "User name")
-    // .option("-p, --password <user-password>", "User password")
-    // .option("-t, --type <user-type>", "User type", "application")
-    // .option("-a, --avatar <avatar-id>", "Avatar id", 1)
-    // .option("-hu, --hubuser <hub-username>", "Hub user name")
-    // .option("-hp, --hubpass <hub-password>", "Hub password")
     .showHelpAfterError()
     .configureHelp({
         sortSubcommands: true,
@@ -154,7 +148,6 @@ program
         }
         else {
             return
-            // user.userMenu(this.args, this.opts())
         }
     })
 
