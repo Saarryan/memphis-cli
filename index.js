@@ -20,9 +20,8 @@ ${helper.stationDesc}
 ${helper.stationHelp}
 ${helper.userDesc}
 ${helper.userHelp}
-${helper.hubDesc}
-${helper.hubHelp}
 `)
+//TODO: add ${helper.hubDesc} ${helper.hubHelp}
     .configureHelp({
         sortSubcommands: true,
         subcommandTerm: (cmd) => cmd.name() // Just show the name, instead of short usage.
@@ -109,8 +108,8 @@ program
     .option("-p, --password <user-password>", "User password")
     .option("-t, --type <user-type>", "User type", "application")
     .option("-a, --avatar <avatar-id>", "Avatar id", 1)
-    .option("-hu, --hubuser <hub-username>", "Hub user name")
-    .option("-hp, --hubpass <hub-password>", "Hub password")
+    // .option("-hu, --hubuser <hub-username>", "Hub user name")
+    // .option("-hp, --hubpass <hub-password>", "Hub password")
     .showHelpAfterError()
     .configureHelp({
         sortSubcommands: true,
@@ -130,26 +129,26 @@ program
 
 
 //Prepare to hub command
-program
-    .command('hub')
-    .description('Memphis hub usage commands')
-    .argument('<command>')
-    .showHelpAfterError()
-    .configureHelp({
-        sortSubcommands: true,
-        subcommandTerm: (cmd) => cmd.name() // Just show the name, instead of short usage.
-    })
-    .addHelpText('before', helper.hubDesc)
-    .addHelpText('after', `\n${helper.hubHelp}`)
-    .action(function () {
-        const userActions = ["login"]
-        if (!this.args?.length || !userActions.includes(this.args[0])) {
-            console.log(program.commands[4].help())
-        }
-        else {
-            return
-        }
-    })
+// program
+//     .command('hub')
+//     .description('Memphis hub usage commands')
+//     .argument('<command>')
+//     .showHelpAfterError()
+//     .configureHelp({
+//         sortSubcommands: true,
+//         subcommandTerm: (cmd) => cmd.name() // Just show the name, instead of short usage.
+//     })
+//     .addHelpText('before', helper.hubDesc)
+//     .addHelpText('after', `\n${helper.hubHelp}`)
+//     .action(function () {
+//         const userActions = ["login"]
+//         if (!this.args?.length || !userActions.includes(this.args[0])) {
+//             console.log(program.commands[4].help())
+//         }
+//         else {
+//             return
+//         }
+//     })
 
 
 program.parse(process.argv)

@@ -60,12 +60,12 @@ exports.createFactory = async (factory, options) => {
                 console.log(`Factory ${res.name} was created.`);
             })
             .catch((error) => {
-                console.log(`Failed creating factory ${res.name}.`)
+                console.log(`Failed creating ${factory} factory.`)
                 // console.error(error); //handel it
             })
     } catch (error) {
         // console.error(error);
-        console.log(`Failed creating factory ${res.name}.`)
+        console.log(`Failed creating ${factory} factory.`)
     }
 }
 

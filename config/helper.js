@@ -23,14 +23,13 @@ const userHelp =    `User Commands:
    del               Delete user
   `
 
-const connectHelp = `Connection configuration to Memphis server
-`
+const connectHelp = `Connection configuration to Memphis server`
 
-const hubDesc = `Memphis built-in components (connectors and functions)`
+// const hubDesc = `Memphis built-in components (connectors and functions)`
 
-const hubHelp =     `Hub Commands:
-   login             Login to Hub
-`
+// const hubHelp =     `Hub Commands:
+//    login             Login to Hub
+// `
 
 exports.factoryDesc = factoryDesc;
 exports.factoryHelp = factoryHelp;
@@ -43,5 +42,5 @@ exports.userHelp = userHelp;
 
 exports.connectHelp = connectHelp;
 
-exports.hubDesc = hubDesc;
-exports.hubHelp = hubHelp
+// exports.hubDesc = hubDesc;
+// exports.hubHelp = hubHelp

@@ -4,7 +4,7 @@ module.exports = {
     ADD_USER: '/api-gw/usermgmt/addUser',
     GET_ALL_USERS: '/api-gw/usermgmt/getAllUsers',
     REMOVE_USER: '/api-gw/usermgmt/removeUser',
-    EDIT_HUB_CREDS: '/api-gw/usermgmt/editHubCreds',
+    // EDIT_HUB_CREDS: '/api-gw/usermgmt/editHubCreds',
 
     //Factories:
     CREATE_FACTORY: '/api-gw/factories/createFactory',

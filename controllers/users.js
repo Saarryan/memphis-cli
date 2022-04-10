@@ -52,8 +52,8 @@ exports.addUser = async (user) => {
             bodyParams: {
                 "username": user.name,
                 "password": user.password,
-                "hub_username": user.hubuser,
-                "hub_password": user.hubpass,
+                // "hub_username": user.hubuser,
+                // "hub_password": user.hubpass,
                 "user_type": user.type,
                 "avatar_id": parseInt(user.avatar),
             },
@@ -100,33 +100,33 @@ exports.removeUser = async (user) => {
     }
 }
 
-exports.edithubcred = async (user) => {
-    try {
-        const data = fs.readFileSync('.memconfig', 'utf8')
-        if (data.length == 0) {
-            return
-        }
-        const credentials = JSON.parse(data.toString())
-        httpRequest({
-            method: "PUT",
-            url: `${credentials.server}${ApiEndpoint.EDIT_HUB_CREDS}`,
-            headers: { 'Authorization': 'Bearer ' + credentials.jwt },
-            bodyParams: {
-                "hub_username": user.hubuser,
-                "hub_password": user.hubpass,
-            },
-            queryParams: null,
-            timeout: 0,
-        })
-            .then(res => {
-                user.hubuser && console.log(`User's hub name was updated.`)
-                user.hubpass && console.log(`User's hub password was updated.`)
-            })
-            .catch((error) => {
-                console.error(`Failed updating hub credentials.`)
-            })
-    } catch (error) {
-        // console.error((error));
-        console.error(`Failed updating hub credentials.`)
-    }
-}
+// exports.edithubcred = async (user) => {
+//     try {
+//         const data = fs.readFileSync('.memconfig', 'utf8')
+//         if (data.length == 0) {
+//             return
+//         }
+//         const credentials = JSON.parse(data.toString())
+//         httpRequest({
+//             method: "PUT",
+//             url: `${credentials.server}${ApiEndpoint.EDIT_HUB_CREDS}`,
+//             headers: { 'Authorization': 'Bearer ' + credentials.jwt },
+//             bodyParams: {
+//                 "hub_username": user.hubuser,
+//                 "hub_password": user.hubpass,
+//             },
+//             queryParams: null,
+//             timeout: 0,
+//         })
+//             .then(res => {
+//                 user.hubuser && console.log(`User's hub name was updated.`)
+//                 user.hubpass && console.log(`User's hub password was updated.`)
+//             })
+//             .catch((error) => {
+//                 console.error(`Failed updating hub credentials.`)
+//             })
+//     } catch (error) {
+//         // console.error((error));
+//         console.error(`Failed updating hub credentials.`)
+//     }
+// }

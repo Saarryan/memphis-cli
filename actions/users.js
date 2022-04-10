@@ -10,7 +10,7 @@ const handleUserActions = (action, options) => {
             break;
         case "add":
             if (!options.name || !options.password)
-                console.log(`User name and password are required. Use command:\nmem user add --name <user-name> --password <user-password> --type <user-type> --avatar <avatar-id> --hubuser <hub-username> --hubpass <hub-password>`)
+                console.log(`User name and password are required. Use command:\nmem user add --name <user-name> --password <user-password> --type <user-type> --avatar <avatar-id>`) //--hubuser <hub-username> --hubpass <hub-password>`)
             else
                 users.addUser(options)
             break;
