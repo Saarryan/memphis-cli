@@ -22,7 +22,7 @@ const handleStatoionActions = (action, options) => {
             if (!action[1])
                 console.log("Station name is required. Use command:\nmem station info <station-name>") //Add retention and throughput
             else
-                station.getStatopnInfo(action[1])
+                station.getStationInfo(action[1])
             break;
         // case "edit":
         //     if (!action[1])

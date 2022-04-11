@@ -25,6 +25,18 @@ const userHelp =    `User Commands:
 
 const connectHelp = `Connection configuration to Memphis server`
 
+const producerDesc = `Producer is the entity who can send messages into stations`
+
+const producerHelp = `Producer Commands:
+   ls                List of Producers
+`
+
+const consumerDesc = `Consumer is the entity who can consume messages from stations`
+
+const consumerHelp = `Consumer Commands:
+   ls                List of Consumers
+`
+
 // const hubDesc = `Memphis built-in components (connectors and functions)`
 
 // const hubHelp =     `Hub Commands:
@@ -44,3 +56,9 @@ exports.connectHelp = connectHelp;
 
 // exports.hubDesc = hubDesc;
 // exports.hubHelp = hubHelp
+
+exports.producerDesc = producerDesc;
+exports.producerHelp = producerHelp;
+
+exports.consumerDesc = consumerDesc;
+exports.consumerHelp = consumerHelp;

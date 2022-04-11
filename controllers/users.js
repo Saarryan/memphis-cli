@@ -44,6 +44,7 @@ exports.addUser = async (user) => {
         if (data.length == 0) {
             return
         }
+        console.log(user)
         const credentials = JSON.parse(data.toString())
         httpRequest({
             method: "POST",
@@ -62,9 +63,14 @@ exports.addUser = async (user) => {
         })
             .then(res => {
                 console.log(`User ${res.username} was created.`);
+                if(res.user_type === "application"){
+                    console.log(`Broker connection credentials: ${res.broker_connection_creds}`)
+                    console.warn(`These credentials CAN'T be restored, save them in a safe place`);
+                }
             })
             .catch((error) => {
                 // console.error(JSON.stringify(error))
+                // console.log(error);
                 console.log(`Failed adding ${user.name} user.`)
             })
     } catch (error) {
