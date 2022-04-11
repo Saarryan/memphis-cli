@@ -9,10 +9,16 @@ const handleUserActions = (action, options) => {
             users.getUsers()
             break;
         case "add":
-            if (!options.name || !options.password)
-                console.log(`User name and password are required. Use command:\nmem user add --name <user-name> --password <user-password> --type <user-type> --avatar <avatar-id>`) //--hubuser <hub-username> --hubpass <hub-password>`)
-            else
+            if (!options.name)
+                console.log(`User name is required. Use command:\nmem user add --name <user-name> --password <user-password> --type <user-type> --avatar <avatar-id>\nNote:\ntype values: application/management`) //--hubuser <hub-username> --hubpass <hub-password>`)
+            else if((!options.password && options.type === 'management'))
+                console.log(`Password is required for user of type management. Use command:\nmem user add --name <user-name> --password <user-password> --type <user-type> --avatar <avatar-id>\nNote:\ntype values: application/management`)
+            else if((options.password && options.type === 'application'))
+                console.log(`Password is not required for user of type application. Use command:\nmem user add --name <user-name> --password <user-password> --type <user-type> --avatar <avatar-id>\nNote:\ntype values: application/management`)
+            else if(!options.type || options.type === 'management' || options.type === 'application')
                 users.addUser(options)
+            else
+                console.log(` Use command:\nmem user add --name <user-name> --password <user-password> --type <user-type> --avatar <avatar-id>\nNote:\ntype values: application/management`);
             break;
         case "del":
             if (!action[1])

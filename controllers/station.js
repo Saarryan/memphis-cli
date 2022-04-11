@@ -143,7 +143,7 @@ exports.createStation = async (station, options) => {
     }
 }
 
-exports.getStatopnInfo = async (station) => {
+exports.getStationInfo = async (station) => {
     try {
         const data = fs.readFileSync('.memconfig', 'utf8')
         if (data.length == 0) {
@@ -208,10 +208,13 @@ exports.removeStation = async (station) => {
                 Object.keys(res).length === 0 ? console.log(`Statoin ${station} was removed.`) : console.log(`Failed removing station ${station}.`)
             })
             .catch((error) => {
-                console.log(`Failed removing station ${station}.`)
+                console.log(`Failed removing ${station} station.`)
+                if(error.status === 400){
+                    console.error(error.errorObj.message);
+                }
             })
     } catch (error) {
         // console.error(error);
-        console.log(`Failed removing station ${station}.`)
+        console.log(`Failed removing ${station} station.`)
     }
 }

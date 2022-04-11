@@ -18,4 +18,11 @@ module.exports = {
     REMOVE_STATION: '/api-gw/stations/removeStation',
     GET_ALL_STATIONS: '/api-gw/stations/getAllStations',
 
+    //Producers
+    GET_ALL_PRODUCERS: '/api-gw/producers/getAllProducers',
+    GET_ALL_PRODUCERS_BY_STATION: '/api-gw/producers/getAllProducersByStation?station_name=',
+
+    //Consumers
+    GET_ALL_CONSUMERS: '/api-gw/consumers/getAllConsumers',
+    GET_ALL_CONSUMERS_BY_STATION: '/api-gw/consumers/getAllConsumersByStation?station_name='
 }

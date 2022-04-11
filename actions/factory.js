@@ -32,7 +32,7 @@ const handleFactoryActions = (action, options) => {
     }
 }
 
-exports.factorynMenu = (action, options) => {
+exports.factoryMenu = (action, options) => {
     if (!isValidToken()) {
         login()
             .then(res => {
