@@ -22,11 +22,10 @@ exports.getProducers = async () => {
                     console.table([{ 
                             name: ' ',
                             type: ' ',
-                            connection_id: ' ',
                             created_by_user: ' ',
-                            creation_date: ' ',
                             station_name: ' ',
                             factory_name: ' ',
+                            creation_date: ' ',
                             }]
                     )
                 }
@@ -35,8 +34,10 @@ exports.getProducers = async () => {
                         res.map(producer => {
                             return {
                                 "name": producer.name,
-                                "description": producer.description,
+                                "type": producer.type,
                                 "created_by_user": producer.created_by_user,
+                                "station_name": producer.station_name,
+                                "factory_name": producer.factory_name,
                                 "creation_date": producer.creation_date,
                             };
                         }))
@@ -44,7 +45,6 @@ exports.getProducers = async () => {
                 
             })
             .catch((error) => {
-                console.log(error);
                 console.log("Failed fetching all producers")
                 // console.error(error); //handel it
             })
@@ -55,7 +55,7 @@ exports.getProducers = async () => {
 }
 
 
-exports.getProducersByStation = async (station, options) => {
+exports.getProducersByStation = async (station) => {
     try {
         const data = fs.readFileSync('.memconfig', 'utf8')
         if (data.length == 0) {
@@ -71,18 +71,39 @@ exports.getProducersByStation = async (station, options) => {
             timeout: 0,
         })
             .then(res => {
-                console.table(
-                    res.map(producer => {
-                        return {
-                            "name": producer.name,
-                            "description": producer.description,
-                            "created_by_user": producer.created_by_user,
-                            "creation_date": producer.creation_date,
-                        };
-                    }))
+                if (res.length === 0){
+                    console.table([{ 
+                            name: ' ',
+                            type: ' ',
+                            created_by_user: ' ',
+                            station_name: ' ',
+                            factory_name: ' ',
+                            creation_date: ' ',
+                            }]
+                    )
+                }
+                else{
+                    console.table(
+                        res.map(producer => {
+                            return {
+                                "name": producer.name,
+                                "type": producer.type,
+                                "created_by_user": producer.created_by_user,
+                                "station_name": producer.station_name,
+                                "factory_name": producer.factory_name,
+                                "creation_date": producer.creation_date,
+                            };
+                        }))
+                }
+                
             })
             .catch((error) => {
-                console.log(`Failed fetching all producers of station ${station}.`)
+                if(error.errorObj.message === 'Station does not exist'){
+                    console.log(error.errorObj.message);
+                }
+                else{
+                    console.log(`Failed fetching all producers of station ${station}.`)
+                }
                 // console.error(error); //handel it
             })
     } catch (error) {

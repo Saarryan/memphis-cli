@@ -16,7 +16,7 @@ program
     .usage('<command> [options]')
     // .description('Memphis CLI')
     .addHelpText('after', `
-${helper.connectHelp}
+${helper.connectDesc}
 ${helper.factoryDesc}
 ${helper.factoryHelp}
 ${helper.stationDesc}
@@ -43,7 +43,7 @@ program
     .option("-s, --server <server>", "Memphis server")
     .usage('<command> [options]')
     .showHelpAfterError()
-    .addHelpText('before', helper.connectHelp)
+    .addHelpText('before', helper.connectDesc)
     .action(function () {
         if (Object.keys(this.opts()).length === 0) {
             console.log(program.commands[0].help())
