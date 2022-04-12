@@ -1,1 +1,4 @@
-# strech-cli
+# memphis-cli
+
+## Direct istallation 
+npm install -g  
