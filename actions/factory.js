@@ -2,9 +2,7 @@ const factory = require("../controllers/factory")
 const isValidToken = require("../utils/validateToken")
 const login = require("../controllers/login")
 
-exports.factorynMenu = (action, options) => {
-    if (!isValidToken())
-        login()
+const handleFactoryActions = (action, options) => {
     switch (action[0]) {
         case "ls":
             factory.getFactories()
@@ -25,11 +23,29 @@ exports.factorynMenu = (action, options) => {
             break;
         case "del":
             if (!action[1])
-                console.log("\nFactory name is required. Use command:\nmem factory del <factory-name> ")
+                console.log("Factory name is required. Use command:\nmem factory del <factory-name> ")
             else
                 factory.removenFactory(action[1])
             break;
         default:
             return
     }
+}
+
+exports.factoryMenu = (action, options) => {
+    if (!isValidToken()) {
+        login()
+            .then(res => {
+                handleFactoryActions(action, options)
+            })
+            .catch((error) => {
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+                } else {
+                    console.log("Failed connecting")
+                }
+            })
+    }
+    else handleFactoryActions(action, options)
 };
+

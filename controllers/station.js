@@ -1,5 +1,6 @@
-const axios = require('axios').default;
 const ApiEndpoint = require("../apiEndpoints")
+const httpRequest = require("../services/httpRequest")
+const fs = require('fs');
 
 const stations = [{
     factory_name: "factory1",
@@ -43,60 +44,164 @@ const stations = [{
 ]
 
 
-exports.getStations = async (application) => {
+exports.getAllStations = async () => {
     try {
-        application && console.log(`flag -p with application name: ${application}`)
-        console.log("\n")
-        console.table(
-            stations.map(station => {
-                return {
-                    "application name": station.application_name,
-                    "station name": station.factory_name,
-                    "retention type": station.retention_type,
-                    "retentention value": station.retentention_value,
-                    "max_throughput type": station.max_throughput_type,
-                    "max_throughput value": station.max_throughput_value,
-                };
-            })
-        );
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-exports.createStation = async (name, options) => {
-    try {
-        // const response = await axios.post(config.SERVER_URL + ApiEndpoint.GET_ALL_QUEUES, {
-        //     application_name: name, 
-        //     application_description: options.desc
-        // });
-        console.log(`\nStation was created.`);
-        console.table([{ "application name": options.application, "station name": name }])
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-exports.editStation = async (name, options) => {
-    try {
-        console.log(`\nStation ${name} was edited.\nDetails:`);
-        if (options.name) {
-            if (options.application)
-                console.table([{ "station name": options.name, "application name": options.application }])
-            else
-                console.table([{ "station name": options.name }])
+        const data = fs.readFileSync('.memconfig', 'utf8')
+        if (data.length == 0) {
+            return
         }
-        else
-            console.table([{ "application name": options.application }])
+        const credentials = JSON.parse(data.toString())
+        httpRequest({
+            method: "GET",
+            url: `${credentials.server}${ApiEndpoint.GET_ALL_STATIONS}`,
+            headers: { 'Authorization': 'Bearer ' + credentials.jwt },
+            bodyParams: null,
+            queryParams: null,
+            timeout: 0,
+        })
+            .then(res => {
+                console.table(
+                    res.map(station => {
+                        return {
+                            "name": station.name,
+                            "factory": station.factory_name,
+                            "created by": station.created_by_user,
+                            "creation": station.creation_date.substring(0,10),
+                            "retention type": station.retention_type,
+                            "retentention value": station.retention_value,
+                            "replicas": station.replicas,
+                            "dedup window ms": station.dedup_window_in_ms,
+                            
+                        };
+                    })
+                )
+            })
+            .catch((error) => {
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+                } else {
+                    console.log("Failed fetching all stations")
+                }
+            })
     } catch (error) {
-        console.error(error);
+        if (error.status === 666){
+            console.log(error.errorObj.message);
+        } else {
+            console.log("Failed fetching all stations")
+        }
     }
 }
 
-exports.removeStation = async (name) => {
+exports.createStation = async (station, options) => {
     try {
-        console.log(`\nStation ${name} was removed.`);
+        const data = fs.readFileSync('.memconfig', 'utf8')
+        if (data.length == 0) {
+            return
+        }
+        const credentials = JSON.parse(data.toString())
+        httpRequest({
+            method: "POST",
+            url: `${credentials.server}${ApiEndpoint.CREATE_STATION}`,
+            headers: { 'Authorization': 'Bearer ' + credentials.jwt },
+            bodyParams: {
+                "name": station,
+                "factory_name": options.factory,
+                "retention_type": options.retentiontype,
+                "retention_value": options.retentionvalue,
+                "storage_type": options.storage,
+                "replicas": options.replicas,
+                "dedup_enabled": options.dedupenabled,
+                "dedup_window_in_ms": options.dedupwindow
+            },
+            queryParams: null,
+            timeout: 0,
+        })
+            .then(res => {
+                console.log(`Station ${station} was created with the following details:`)
+            })
+            .catch((error) => {
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+                } else {
+                    console.log(`Failed creating ${station} station.`)
+                }
+            })
     } catch (error) {
-        console.error(error);
+        if (error.status === 666){
+            console.log(error.errorObj.message);
+        } else {
+            console.log(`Failed creating ${station} station.`)
+        }
+    }
+}
+
+exports.getStationInfo = async (station) => {
+    try {
+        const data = fs.readFileSync('.memconfig', 'utf8')
+        if (data.length == 0) {
+            return
+        }
+        const credentials = JSON.parse(data.toString())
+        httpRequest({
+            method: "GET",
+            url: `${credentials.server}${ApiEndpoint.GET_STATION_INFO}?station_name=${station}`,
+            headers: { 'Authorization': 'Bearer ' + credentials.jwt },
+            bodyParams: null,
+            queryParams: null,
+            timeout: 0,
+        })
+            .then(res => {
+                console.log("Station info:")
+                console.log(res)
+            })
+            .catch((error) => {
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+                } else {
+                    console.log(`Failed fetching ${station} station details.`)
+                }
+            })
+    } catch (error) {
+        if (error.status === 666){
+            console.log(error.errorObj.message);
+        } else {
+            console.log(`Failed fetching ${station} station details.`)
+        }
+    }
+}
+
+exports.removeStation = async (station) => {
+    try {
+        const data = fs.readFileSync('.memconfig', 'utf8')
+        if (data.length == 0) {
+            return
+        }
+        const credentials = JSON.parse(data.toString())
+        httpRequest({
+            method: "DELETE",
+            url: `${credentials.server}${ApiEndpoint.REMOVE_STATION}`,
+            headers: { 'Authorization': 'Bearer ' + credentials.jwt },
+            bodyParams: {
+                "station_name": station,
+            },
+            queryParams: null,
+            timeout: 0,
+        })
+            .then(res => {
+                Object.keys(res).length === 0 ? console.log(`Statoin ${station} was removed.`) : console.log(`Failed removing station ${station}.`)
+            })
+            .catch((error) => {
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+                } else {
+                    console.log(`Failed removing ${station} station.`)
+                }
+            })
+    } catch (error) {
+        if (error.status === 666){
+            console.log(error.errorObj.message);
+        } else {
+            console.log(`Failed removing ${station} station.`)
+        }
     }
 }
