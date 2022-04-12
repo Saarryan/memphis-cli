@@ -5,10 +5,10 @@ const login = require("../controllers/login")
 const handleProducerActions = (action, options) => {
     switch (action[0]) {
         case "ls":
-            if(!action[1])
+            if(!options.station)
                 producer.getProducers()
-            else if((action[1] === '--station' || action[1] === '-s') && action[2] )
-                producer.getProducersByStation(action[2])
+            else if(options.station)
+                producer.getProducersByStation(options.station)
             else
             console.log("Use command:\nmem producer ls\nOR\nmem producer ls --station <station-name>")
             break;

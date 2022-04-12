@@ -23,7 +23,11 @@ const userHelp =    `User Commands:
    del               Delete user
   `
 
-const connectHelp = `Connection configuration to Memphis server`
+const connectDesc = `Connection configuration to Memphis server`
+
+// const connectHelp = `Connection Commands:
+
+// `
 
 const producerDesc = `Producer is the entity who can send messages into stations`
 
@@ -52,7 +56,7 @@ exports.stationHelp = stationHelp;
 exports.userDesc = userDesc;
 exports.userHelp = userHelp;
 
-exports.connectHelp = connectHelp;
+exports.connectDesc = connectDesc;
 
 // exports.hubDesc = hubDesc;
 // exports.hubHelp = hubHelp

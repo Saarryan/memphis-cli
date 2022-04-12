@@ -5,10 +5,10 @@ const login = require("../controllers/login")
 const handleConsumerActions = (action, options) => {
     switch (action[0]) {
         case "ls":
-            if(!action[1])
+            if(!options.station)
                 consumer.getConsumers()
-            else if((action[1] === '--station' || action[1] === '-s') && action[2] )
-                consumer.getConsumersByStation(action[2])
+            else if(options.station)
+                consumer.getConsumersByStation(options.station)
             else
             console.log("Use command:\nmem consumer ls\nOR\nmem consumer ls --station <station-name>")
             break;

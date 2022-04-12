@@ -22,11 +22,10 @@ exports.getConsumers = async () => {
                     console.table([{ 
                             name: ' ',
                             type: ' ',
-                            connection_id: ' ',
                             created_by_user: ' ',
-                            creation_date: ' ',
                             station_name: ' ',
                             factory_name: ' ',
+                            creation_date: ' ',
                             }]
                     )
                 }
@@ -35,8 +34,10 @@ exports.getConsumers = async () => {
                         res.map(consumer => {
                             return {
                                 "name": consumer.name,
-                                "description": consumer.description,
+                                "type": consumer.type,
                                 "created_by_user": consumer.created_by_user,
+                                "station_name": consumer.station_name,
+                                "factory_name": consumer.factory_name,
                                 "creation_date": consumer.creation_date,
                             };
                         }))
@@ -54,7 +55,7 @@ exports.getConsumers = async () => {
 }
 
 
-exports.getConsumersByStation = async (station, options) => {
+exports.getConsumersByStation = async (station) => {
     try {
         const data = fs.readFileSync('.memconfig', 'utf8')
         if (data.length == 0) {
@@ -70,18 +71,39 @@ exports.getConsumersByStation = async (station, options) => {
             timeout: 0,
         })
             .then(res => {
-                console.table(
-                    res.map(consumer => {
-                        return {
-                            "name": consumer.name,
-                            "description": consumer.description,
-                            "created_by_user": consumer.created_by_user,
-                            "creation_date": consumer.creation_date,
-                        };
-                    }))
+                if (res.length === 0){
+                    console.table([{ 
+                            name: ' ',
+                            type: ' ',
+                            created_by_user: ' ',
+                            station_name: ' ',
+                            factory_name: ' ',
+                            creation_date: ' ',
+                            }]
+                    )
+                }
+                else{
+                    console.table(
+                        res.map(consumer => {
+                            return {
+                                "name": consumer.name,
+                                "type": consumer.type,
+                                "created_by_user": consumer.created_by_user,
+                                "station_name": consumer.station_name,
+                                "factory_name": consumer.factory_name,
+                                "creation_date": consumer.creation_date,
+                            };
+                        }))
+                }
             })
             .catch((error) => {
-                console.log(`Failed fetching all consumers of station ${station}.`)
+                // console.log(error);
+                if(error.errorObj.message === 'Station does not exist'){
+                    console.log(error.errorObj.message);
+                }
+                else{
+                    console.log(`Failed fetching all consumers of station ${station}.`)
+                }
                 // console.error(error); //handel it
             })
     } catch (error) {
