@@ -24,8 +24,11 @@ exports.consumerMenu = (action, options) => {
                 handleConsumerActions(action, options)
             })
             .catch((error) => {
-                console.log("Failed connecting")
-                // console.error(error);
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+               } else{
+                    console.log("Failed connecting")
+                }
             })
     }
     else handleConsumerActions(action, options)

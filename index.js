@@ -8,6 +8,7 @@ const connect = require('./actions/connect')
 const helper = require('./config/helper')
 const producer = require('./actions/producer')
 const consumer = require('./actions/consumer')
+const init = require('./actions/init')
 
 const program = new commander.Command();
 
@@ -16,7 +17,6 @@ program
     .usage('<command> [options]')
     // .description('Memphis CLI')
     .addHelpText('after', `
-${helper.connectDesc}
 ${helper.factoryDesc}
 ${helper.factoryHelp}
 ${helper.stationDesc}
@@ -56,7 +56,7 @@ program
         }
     })
 
-    program
+program
     .command('factory')
     .description('Factories usage commands')
     .argument('<command>')
@@ -138,7 +138,7 @@ program
         }
     })
 
-    program
+program
     .command('producer')
     .description('Producers usage commands')
     .option("-s, --station <station-name>", "Producers by station")
@@ -161,7 +161,7 @@ program
         }
     })
 
-    program
+program
     .command('consumer')
     .description('Consumer usage commands')
     .option("-s, --station <station-name>", "Consumers by station")
@@ -184,6 +184,16 @@ program
         }
     })
 
+program
+    .command('init')
+    .description('Creates an example project for working with Memphis')
+    .option("-l, --lang <language>", "Language of project", "nodejs")
+    .argument('[command]')
+    .usage('[options]')
+    .showHelpAfterError()
+    .action(function () {
+        init.initMenu(this.args, this.opts())
+    })
 
 //Prepare to hub command
 // program

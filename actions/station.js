@@ -24,12 +24,6 @@ const handleStatoionActions = (action, options) => {
             else
                 station.getStationInfo(action[1])
             break;
-        // case "edit":
-        //     if (!action[1])
-        //         console.log("\nStation name is required. Use command:\nmem station edit <station-name> --name <new-station-name> --application <application-name>") //Add retention and throughput
-        //     else
-        //         station.editStation(action[1], options)
-        //     break;
         case "del":
             if (!action[1])
                 console.log("Station name is required. Use command:\nmem del <station-name>")
@@ -48,8 +42,11 @@ exports.stationMenu = (action, options) => {
                 handleStatoionActions(action, options)
             })
             .catch((error) => {
-                // console.error(error);
-                console.log("Failed connecting")
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+               } else {
+                   console.log("Failed connecting")
+               }
             })
     }
     else handleStatoionActions(action, options)

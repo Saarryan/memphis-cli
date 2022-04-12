@@ -28,7 +28,9 @@ module.exports = async () => {
             return true
         })
         .catch((error) => {
+            if (error.status === 666){
+                console.log(error.errorObj.message);
+            }
             return false
-            // console.error(error);
         })
 }

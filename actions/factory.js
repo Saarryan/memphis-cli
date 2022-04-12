@@ -39,8 +39,11 @@ exports.factoryMenu = (action, options) => {
                 handleFactoryActions(action, options)
             })
             .catch((error) => {
-                console.log("Failed connecting")
-                // console.error(error);
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+                } else {
+                    console.log("Failed connecting")
+                }
             })
     }
     else handleFactoryActions(action, options)

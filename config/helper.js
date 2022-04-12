@@ -25,9 +25,6 @@ const userHelp =    `User Commands:
 
 const connectDesc = `Connection configuration to Memphis server`
 
-// const connectHelp = `Connection Commands:
-
-// `
 
 const producerDesc = `Producer is the entity who can send messages into stations`
 
@@ -40,6 +37,9 @@ const consumerDesc = `Consumer is the entity who can consume messages from stati
 const consumerHelp = `Consumer Commands:
    ls                List of Consumers
 `
+
+const initDesc = `Creates an example project for working with Memphis`
+
 
 // const hubDesc = `Memphis built-in components (connectors and functions)`
 
@@ -66,3 +66,5 @@ exports.producerHelp = producerHelp;
 
 exports.consumerDesc = consumerDesc;
 exports.consumerHelp = consumerHelp;
+
+exports.initDesc = initDesc;
