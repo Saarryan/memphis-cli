@@ -22,12 +22,18 @@ module.exports = (credentials) => {
                     return res
                })
                .catch((error) => {
-                    // return error
-                    console.log("Failed connecting")
+                    if (error.status === 666){
+                         console.log(error.errorObj.message);
+                    } else {
+                         console.log("Failed connecting")
+                    }
                });
         } catch (error) {
-             console.log("Failed connecting")
-          // console.error(error);
+          if (error.status === 666){
+               console.log(error.errorObj.message);
+          } else {
+               console.log("Failed connecting")
+          }
         }
 
         

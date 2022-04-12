@@ -6,20 +6,27 @@ const station = require('./actions/station')
 const user = require('./actions/users')
 const connect = require('./actions/connect')
 const helper = require('./config/helper')
+const producer = require('./actions/producer')
+const consumer = require('./actions/consumer')
+const init = require('./actions/init')
 
 const program = new commander.Command();
 
 program
     .version('0.1.0')
+    .usage('<command> [options]')
     // .description('Memphis CLI')
     .addHelpText('after', `
-${helper.connectHelp}
 ${helper.factoryDesc}
 ${helper.factoryHelp}
 ${helper.stationDesc}
 ${helper.stationHelp}
 ${helper.userDesc}
 ${helper.userHelp}
+${helper.producerDesc}
+${helper.producerHelp}
+${helper.consumerDesc}
+${helper.consumerHelp}
 `)
 //TODO: add ${helper.hubDesc} ${helper.hubHelp}
     .configureHelp({
@@ -30,12 +37,13 @@ ${helper.userHelp}
 program
     .command('connect')
     .description('Connection to Memphis server')
-    .argument('<command>')
+    .argument('[command]')
     .option("-u, --user <user>", "User")
     .option("-p, --password <password>", "Password")
     .option("-s, --server <server>", "Memphis server")
+    .usage('<command> [options]')
     .showHelpAfterError()
-    .addHelpText('before', helper.connectHelp)
+    .addHelpText('before', helper.connectDesc)
     .action(function () {
         if (Object.keys(this.opts()).length === 0) {
             console.log(program.commands[0].help())
@@ -54,6 +62,7 @@ program
     .argument('<command>')
     .option("-n, --name <factory-name>", "Factory name")
     .option("-d, --desc <factory-description>", "Factory description")
+    .usage('<command> [options]')
     .showHelpAfterError()
     .configureHelp({
         sortSubcommands: true,
@@ -67,7 +76,7 @@ program
             console.log(program.commands[1].help())
         }
         else {
-            factory.factorynMenu(this.args, this.opts())
+            factory.factoryMenu(this.args, this.opts())
         }
     })
 
@@ -83,6 +92,7 @@ program
     .option("-r, --replicas <replicas>", "Replicas")
     .option("-de, --dedupenabled <dedup-enabled>", "Dedup enabled")
     .option("-dw, --dedupwindow <dedup-window-in-ms>", "Dedup window in ms")
+    .usage('<command> [options]')
     .showHelpAfterError()
     .configureHelp({
         sortSubcommands: true,
@@ -106,10 +116,11 @@ program
     .argument('<command>')
     .option("-n, --name <user-name>", "User name")
     .option("-p, --password <user-password>", "User password")
-    .option("-t, --type <user-type>", "User type", "application")
+    .option("-t, --type <user-type>", "User type", "management")
     .option("-a, --avatar <avatar-id>", "Avatar id", 1)
     // .option("-hu, --hubuser <hub-username>", "Hub user name")
     // .option("-hp, --hubpass <hub-password>", "Hub password")
+    .usage('<command> [options]')
     .showHelpAfterError()
     .configureHelp({
         sortSubcommands: true,
@@ -127,12 +138,69 @@ program
         }
     })
 
+program
+    .command('producer')
+    .description('Producers usage commands')
+    .option("-s, --station <station-name>", "Producers by station")
+    .argument('<command>')
+    .usage('<command> [options]')
+    .showHelpAfterError()
+    .configureHelp({
+        sortSubcommands: true,
+        subcommandTerm: (cmd) => cmd.name() // Just show the name, instead of short usage.
+    })
+    .addHelpText('before', helper.producerDesc)
+    .addHelpText('after', `\n${helper.producerHelp}`)
+    .action(function () {
+        const producerActions = ["ls"]
+        if (!this.args?.length || !producerActions.includes(this.args[0])) {
+            console.log(program.commands[1].help())
+        }
+        else {
+            producer.producerMenu(this.args, this.opts())
+        }
+    })
+
+program
+    .command('consumer')
+    .description('Consumer usage commands')
+    .option("-s, --station <station-name>", "Consumers by station")
+    .argument('<command>')
+    .usage('<command> [options]')
+    .showHelpAfterError()
+    .configureHelp({
+        sortSubcommands: true,
+        subcommandTerm: (cmd) => cmd.name() // Just show the name, instead of short usage.
+    })
+    .addHelpText('before', helper.consumerDesc)
+    .addHelpText('after', `\n${helper.consumerHelp}`)
+    .action(function () {
+        const consumerActions = ["ls"]
+        if (!this.args?.length || !consumerActions.includes(this.args[0])) {
+            console.log(program.commands[1].help())
+        }
+        else {
+            consumer.consumerMenu(this.args, this.opts())
+        }
+    })
+
+program
+    .command('init')
+    .description('Creates an example project for working with Memphis')
+    .option("-l, --lang <language>", "Language of project", "nodejs")
+    .argument('[command]')
+    .usage('[options]')
+    .showHelpAfterError()
+    .action(function () {
+        init.initMenu(this.args, this.opts())
+    })
 
 //Prepare to hub command
 // program
 //     .command('hub')
 //     .description('Memphis hub usage commands')
 //     .argument('<command>')
+//     .usage('<command> [options]')
 //     .showHelpAfterError()
 //     .configureHelp({
 //         sortSubcommands: true,

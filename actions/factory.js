@@ -32,15 +32,18 @@ const handleFactoryActions = (action, options) => {
     }
 }
 
-exports.factorynMenu = (action, options) => {
+exports.factoryMenu = (action, options) => {
     if (!isValidToken()) {
         login()
             .then(res => {
                 handleFactoryActions(action, options)
             })
             .catch((error) => {
-                console.log("Failed connecting")
-                // console.error(error);
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+                } else {
+                    console.log("Failed connecting")
+                }
             })
     }
     else handleFactoryActions(action, options)

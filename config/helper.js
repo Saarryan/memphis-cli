@@ -23,7 +23,23 @@ const userHelp =    `User Commands:
    del               Delete user
   `
 
-const connectHelp = `Connection configuration to Memphis server`
+const connectDesc = `Connection configuration to Memphis server`
+
+
+const producerDesc = `Producer is the entity who can send messages into stations`
+
+const producerHelp = `Producer Commands:
+   ls                List of Producers
+`
+
+const consumerDesc = `Consumer is the entity who can consume messages from stations`
+
+const consumerHelp = `Consumer Commands:
+   ls                List of Consumers
+`
+
+const initDesc = `Creates an example project for working with Memphis`
+
 
 // const hubDesc = `Memphis built-in components (connectors and functions)`
 
@@ -40,7 +56,15 @@ exports.stationHelp = stationHelp;
 exports.userDesc = userDesc;
 exports.userHelp = userHelp;
 
-exports.connectHelp = connectHelp;
+exports.connectDesc = connectDesc;
 
 // exports.hubDesc = hubDesc;
 // exports.hubHelp = hubHelp
+
+exports.producerDesc = producerDesc;
+exports.producerHelp = producerHelp;
+
+exports.consumerDesc = consumerDesc;
+exports.consumerHelp = consumerHelp;
+
+exports.initDesc = initDesc;

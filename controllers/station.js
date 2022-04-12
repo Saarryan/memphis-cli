@@ -63,7 +63,6 @@ exports.getAllStations = async () => {
                 console.table(
                     res.map(station => {
                         return {
-                            // "factory name": station.application_name,
                             "name": station.name,
                             "factory": station.factory_name,
                             "created by": station.created_by_user,
@@ -78,33 +77,20 @@ exports.getAllStations = async () => {
                 )
             })
             .catch((error) => {
-                // console.log(error)
-                console.log("Failed fetching all stations")
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+                } else {
+                    console.log("Failed fetching all stations")
+                }
             })
     } catch (error) {
-        // console.error(error);
-        console.log("Failed fetching all stations")
+        if (error.status === 666){
+            console.log(error.errorObj.message);
+        } else {
+            console.log("Failed fetching all stations")
+        }
     }
 }
-//     try {
-//         application && console.log(`flag -p with application name: ${application}`)
-//         console.log("\n")
-//         console.table(
-//             stations.map(station => {
-//                 return {
-//                     "application name": station.application_name,
-//                     "station name": station.factory_name,
-//                     "retention type": station.retention_type,
-//                     "retentention value": station.retentention_value,
-//                     "max_throughput type": station.max_throughput_type,
-//                     "max_throughput value": station.max_throughput_value,
-//                 };
-//             })
-//         );
-//     } catch (error) {
-//         console.error(error);
-//     }
-// }
 
 exports.createStation = async (station, options) => {
     try {
@@ -134,16 +120,22 @@ exports.createStation = async (station, options) => {
                 console.log(`Station ${station} was created with the following details:`)
             })
             .catch((error) => {
-                // console.log(error)
-                console.log(`Failed creating ${station} station.`)
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+                } else {
+                    console.log(`Failed creating ${station} station.`)
+                }
             })
     } catch (error) {
-        // console.error(error);
-        console.log(`Failed creating ${station} station.`)
+        if (error.status === 666){
+            console.log(error.errorObj.message);
+        } else {
+            console.log(`Failed creating ${station} station.`)
+        }
     }
 }
 
-exports.getStatopnInfo = async (station) => {
+exports.getStationInfo = async (station) => {
     try {
         const data = fs.readFileSync('.memconfig', 'utf8')
         if (data.length == 0) {
@@ -163,29 +155,20 @@ exports.getStatopnInfo = async (station) => {
                 console.log(res)
             })
             .catch((error) => {
-                console.log(`Failed fetching ${station} station details.`)
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+                } else {
+                    console.log(`Failed fetching ${station} station details.`)
+                }
             })
     } catch (error) {
-        // console.error(error);
-        console.log(`Failed fetching ${station} station details.`)
+        if (error.status === 666){
+            console.log(error.errorObj.message);
+        } else {
+            console.log(`Failed fetching ${station} station details.`)
+        }
     }
 }
-
-// exports.editStation = async (name, options) => {
-//     try {
-//         console.log(`\nStation ${name} was edited.\nDetails:`);
-//         if (options.name) {
-//             if (options.application)
-//                 console.table([{ "station name": options.name, "application name": options.application }])
-//             else
-//                 console.table([{ "station name": options.name }])
-//         }
-//         else
-//             console.table([{ "application name": options.application }])
-//     } catch (error) {
-//         console.error(error);
-//     }
-// }
 
 exports.removeStation = async (station) => {
     try {
@@ -208,10 +191,17 @@ exports.removeStation = async (station) => {
                 Object.keys(res).length === 0 ? console.log(`Statoin ${station} was removed.`) : console.log(`Failed removing station ${station}.`)
             })
             .catch((error) => {
-                console.log(`Failed removing station ${station}.`)
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+                } else {
+                    console.log(`Failed removing ${station} station.`)
+                }
             })
     } catch (error) {
-        // console.error(error);
-        console.log(`Failed removing station ${station}.`)
+        if (error.status === 666){
+            console.log(error.errorObj.message);
+        } else {
+            console.log(`Failed removing ${station} station.`)
+        }
     }
 }
