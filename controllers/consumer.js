@@ -45,12 +45,18 @@ exports.getConsumers = async () => {
                 
             })
             .catch((error) => {
-                console.log("Failed fetching all consumers")
-                // console.error(error); //handel it
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+                } else { 
+                    console.log("Failed fetching all consumers")
+                }
             })
     } catch (error) {
-        console.log("Failed fetching all consumers")
-        // console.error((error));
+        if (error.status === 666){
+            console.log(error.errorObj.message);
+        } else { 
+            console.log("Failed fetching all consumers")
+        }
     }
 }
 
@@ -97,17 +103,17 @@ exports.getConsumersByStation = async (station) => {
                 }
             })
             .catch((error) => {
-                // console.log(error);
-                if(error.errorObj.message === 'Station does not exist'){
+                if (error.status === 666){
                     console.log(error.errorObj.message);
-                }
-                else{
+                } else {
                     console.log(`Failed fetching all consumers of station ${station}.`)
                 }
-                // console.error(error); //handel it
             })
     } catch (error) {
-        console.log(`Failed fetching all consumers of station ${station}.`)
-        // console.error(error);
+        if (error.status === 666){
+            console.log(error.errorObj.message);
+        } else { 
+            console.log(`Failed fetching all consumers of station ${station}.`)
+        }
     }
 }

@@ -45,12 +45,18 @@ exports.getProducers = async () => {
                 
             })
             .catch((error) => {
-                console.log("Failed fetching all producers")
-                // console.error(error); //handel it
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+                } else {
+                    console.log("Failed fetching all producers")
+                }
             })
     } catch (error) {
-        console.log("Failed fetching all producers")
-        // console.error((error));
+        if (error.status === 666){
+            console.log(error.errorObj.message);
+        } else {
+            console.log("Failed fetching all producers")
+        }
     }
 }
 
@@ -98,16 +104,17 @@ exports.getProducersByStation = async (station) => {
                 
             })
             .catch((error) => {
-                if(error.errorObj.message === 'Station does not exist'){
+                if (error.status === 666){
                     console.log(error.errorObj.message);
-                }
-                else{
+                } else {
                     console.log(`Failed fetching all producers of station ${station}.`)
                 }
-                // console.error(error); //handel it
             })
     } catch (error) {
-        console.log(`Failed fetching all producers of station ${station}.`)
-        // console.error(error);
+        if (error.status === 666){
+            console.log(error.errorObj.message);
+        } else {
+            console.log(`Failed fetching all producers of station ${station}.`)
+        }
     }
 }

@@ -29,12 +29,18 @@ exports.getUsers = async () => {
                     }))
             })
             .catch((error) => {
-                // console.error(error);
-                console.log("Failed fetching all users")
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+                } else {
+                    console.log("Failed fetching all users")
+                }
             })
     } catch (error) {
-        // console.error((error));
-        console.log("Failed fetching all users")
+        if (error.status === 666){
+            console.log(error.errorObj.message);
+        } else {
+            console.log("Failed fetching all users")
+        }    
     }
 }
 
@@ -69,13 +75,18 @@ exports.addUser = async (user) => {
                 }
             })
             .catch((error) => {
-                // console.error(JSON.stringify(error))
-                // console.log(error);
-                console.log(`Failed adding ${user.name} user.`)
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+                } else {
+                    console.log(`Failed adding ${user.name} user.`)
+                }
             })
     } catch (error) {
-        // console.error((error));
-        console.log(`Failed adding ${user.name} user.`)
+        if (error.status === 666){
+            console.log(error.errorObj.message);
+        } else {
+            console.log(`Failed adding ${user.name} user.`)
+        }
     }
 }
 
@@ -101,8 +112,11 @@ exports.removeUser = async (user) => {
                 console.log(`Failed removing user ${user}.`)
             })
     } catch (error) {
-        // console.error((error));
-        console.log(`Failed removing user ${user}.`)
+        if (error.status === 666){
+            console.log(error.errorObj.message);
+        } else {
+            console.log(`Failed removing user ${user}.`)
+        }
     }
 }
 
@@ -132,7 +146,10 @@ exports.removeUser = async (user) => {
 //                 console.error(`Failed updating hub credentials.`)
 //             })
 //     } catch (error) {
-//         // console.error((error));
-//         console.error(`Failed updating hub credentials.`)
+            // if (error.status === 666){
+            //     console.log(error.errorObj.message);
+            // } else {
+            //     console.error(`Failed updating hub credentials.`)
+            // }
 //     }
 // }

@@ -44,8 +44,11 @@ exports.userMenu = (action, options) => {
                 handleUserActions(action, options)
             })
             .catch((error) => {
-                // console.error(error);
-                console.log("Failed connecting")
+                if (error.status === 666){
+                    console.log(error.errorObj.message);
+                } else { 
+                    console.log("Failed connecting")
+                }
             })
     }
     else handleUserActions(action, options)
